@@ -60,10 +60,10 @@ function Home() {
   return (
     <React.Fragment>
       <Helmet>
-        <title>Coronavirus Outbreak in India - covid19india.org</title>
+        <title>Coronavirus Outbreak in NZ - nz.covid19live.com</title>
         <meta
           name="title"
-          content="Coronavirus Outbreak in India: Latest Map and Case Count"
+          content="Coronavirus Outbreak in NZ: Latest Map and Case Count"
         />
       </Helmet>
 

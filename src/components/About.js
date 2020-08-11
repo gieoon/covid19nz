@@ -33,10 +33,10 @@ function About() {
   return (
     <React.Fragment>
       <Helmet>
-        <title>About - covid19india.org</title>
+        <title>About - nz.covid19live.com</title>
         <meta
           name="title"
-          content="Coronavirus Outbreak in India: Latest Map and Case Count"
+          content="Coronavirus Outbreak in NZ: Latest Map and Case Count"
         />
       </Helmet>
 

@@ -327,8 +327,12 @@ export const MAP_META = {
     geoDataFile: `${MAPS_DIR}/puducherry.json`,
     mapType: MAP_TYPES.STATE,
   },
+  // TT: {
+  //   geoDataFile: `${MAPS_DIR}/india.json`,
+  //   mapType: MAP_TYPES.COUNTRY,
+  // },
   TT: {
-    geoDataFile: `${MAPS_DIR}/india.json`,
+    geoDataFile: `${MAPS_DIR}/new-zealand-districts.json`,
     mapType: MAP_TYPES.COUNTRY,
   },
 };

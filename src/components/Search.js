@@ -14,28 +14,27 @@ import {Link} from 'react-router-dom';
 import {useDebounce, useUpdateEffect} from 'react-use';
 
 const suggestions = [
-  'Madurai',
-  'Karnataka',
-  'Ladakh',
-  'Mumbai',
-  'Andhra Pradesh',
-  'Alappuzha',
+  'Auckland',
+  'Christchurch',
+  'Wellington',
+  'Hamilton',
+  'Dunedin',
 ];
 
 const districtSuggestions = [
-  'Madurai',
-  'Ganjam',
-  'Alappuzha',
-  'Mumbai',
-  'Chennai',
+  'Auckland',
+  'Christchurch',
+  'Wellington',
+  'Hamilton',
+  'Dunedin',
 ];
 
 const stateSuggestions = [
-  'Andhra Pradesh',
-  'Karnataka',
-  'Gujarat',
-  'West Bengal',
-  'Ladakh',
+  'Auckland',
+  'Christchurch',
+  'Wellington',
+  'Hamilton',
+  'Dunedin',
 ];
 
 function Search() {

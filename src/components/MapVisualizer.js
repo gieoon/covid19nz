@@ -156,18 +156,20 @@ function MapVisualizer({
     if (!geoData) return null;
     const featuresWrap =
       mapView === MAP_VIEWS.STATES
-        ? topojson.feature(geoData, geoData.objects.states).features
+        // ? topojson.feature(geoData, geoData.objects.states).features
+        ? topojson.feature(geoData, geoData.objects.NZL_adm2).features
         : mapMeta.mapType === MAP_TYPES.COUNTRY && mapViz === MAP_VIZS.BUBBLES
         ? [
-            ...topojson.feature(geoData, geoData.objects.states).features,
-            ...topojson.feature(geoData, geoData.objects.districts).features,
+            // ...topojson.feature(geoData, geoData.objects.states).features,
+            ...topojson.feature(geoData, geoData.objects.NZL_adm2).features,
+            ...topojson.feature(geoData, geoData.objects.NZL_adm2).features,
           ]
-        : topojson.feature(geoData, geoData.objects.districts).features;
+        : topojson.feature(geoData, geoData.objects.NZL_adm2).features;
 
     // Add id to each feature
     return featuresWrap.map((feature) => {
-      const district = feature.properties.district;
-      const state = feature.properties.st_nm;
+      const district = feature.properties.ID_1;
+      const state = feature.properties.ID_2;
       const obj = Object.assign({}, feature);
       obj.id = `${mapCode}-${state}${district ? '-' + district : ''}`;
       return obj;
@@ -178,9 +180,9 @@ function MapVisualizer({
     (regionSelection) => {
       regionSelection.select('title').text((d) => {
         if (mapViz === MAP_VIZS.CHOROPLETH) {
-          const state = d.properties.st_nm;
+          const state = d.properties.ID_2;
           const stateCode = STATE_CODES[state];
-          const district = d.properties.district;
+          const district = d.properties.ID_1;
 
           const stateData = data[stateCode];
           const districtData = stateData?.districts?.[district];
@@ -233,8 +235,8 @@ function MapVisualizer({
             .style('cursor', 'pointer')
             .on('mouseenter', (d) => {
               setRegionHighlighted({
-                stateCode: STATE_CODES[d.properties.st_nm],
-                districtName: d.properties.district,
+                stateCode: STATE_CODES[d.properties.ID_2],
+                districtName: d.properties.ID_1,
               });
             })
             .attr('fill', '#fff0')
@@ -257,7 +259,7 @@ function MapVisualizer({
       })
       .on('click', (d) => {
         event.stopPropagation();
-        const stateCode = STATE_CODES[d.properties.st_nm];
+        const stateCode = STATE_CODES[d.properties.ID_2];
         if (
           onceTouchedRegion.current ||
           mapMeta.mapType === MAP_TYPES.STATE ||
@@ -308,8 +310,8 @@ function MapVisualizer({
     if (mapViz === MAP_VIZS.BUBBLES) {
       circlesData = features
         .map((feature) => {
-          const stateCode = STATE_CODES[feature.properties.st_nm];
-          const districtName = feature.properties.district;
+          const stateCode = STATE_CODES[feature.properties.ID_2];
+          const districtName = feature.properties.ID_1;
           const stateData = data[stateCode];
 
           if (mapView === MAP_VIEWS.STATES) {
@@ -351,7 +353,7 @@ function MapVisualizer({
       )
       .on('mouseenter', (feature) => {
         setRegionHighlighted({
-          stateCode: STATE_CODES[feature.properties.st_nm],
+          stateCode: STATE_CODES[feature.properties.ID_2],
           districtName:
             mapView === MAP_VIEWS.STATES
               ? null
@@ -368,7 +370,7 @@ function MapVisualizer({
         if (onceTouchedRegion.current || mapMeta.mapType === MAP_TYPES.STATE)
           return;
         history.push(
-          `/state/${STATE_CODES[feature.properties.st_nm]}${
+          `/state/${STATE_CODES[feature.properties.ID_2]}${
             window.innerWidth < 769 ? '#MapExplorer' : ''
           }`
         );
@@ -400,7 +402,7 @@ function MapVisualizer({
     let meshDistricts = [];
 
     if (mapMeta.mapType === MAP_TYPES.COUNTRY) {
-      meshStates = [topojson.mesh(geoData, geoData.objects.states)];
+      meshStates = [topojson.mesh(geoData, geoData.objects.NZL_adm2)];
       meshStates[0].id = `${mapCode}-states`;
     }
 
@@ -409,7 +411,7 @@ function MapVisualizer({
       (mapView === MAP_VIEWS.DISTRICTS && mapViz === MAP_VIZS.CHOROPLETH)
     ) {
       // Add id to mesh
-      meshDistricts = [topojson.mesh(geoData, geoData.objects.districts)];
+      meshDistricts = [topojson.mesh(geoData, geoData.objects.NZL_adm2)];
       meshDistricts[0].id = `${mapCode}-districts`;
     }
 
@@ -470,11 +472,11 @@ function MapVisualizer({
         .selectAll('circle')
         .attr('fill-opacity', (d) => {
           const highlighted =
-            stateName === d.properties.st_nm &&
+            stateName === d.properties.ID_2 &&
             ((!district && stateCode !== mapCode) ||
               district === d.properties?.district ||
               mapView === MAP_VIEWS.STATES ||
-              (district === UNKNOWN_DISTRICT_KEY && !d.properties.district));
+              (district === UNKNOWN_DISTRICT_KEY && !d.properties.ID_1));
           return highlighted ? 1 : 0.25;
         });
     } else {
@@ -483,7 +485,7 @@ function MapVisualizer({
         .selectAll('path')
         .each(function (d) {
           const highlighted =
-            stateName === d.properties.st_nm &&
+            stateName === d.properties.ID_2 &&
             ((!district && stateCode !== mapCode) ||
               district === d.properties?.district ||
               mapView === MAP_VIEWS.STATES);

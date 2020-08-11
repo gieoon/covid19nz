@@ -13,14 +13,14 @@ function Footer() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          covid19india
+          nz.covid19live
         </a>
       </div>
 
-      <h5>{t('We stand with everyone fighting on the frontlines')}</h5>
+      <h5>{t("We're keeping Kiwi's updated")}</h5>
 
       <div className="links">
-        <a
+        {/* <a
           href="https://github.com/covid19india/covid19india-react"
           className="github"
           target="_blank"
@@ -54,10 +54,10 @@ function Footer() {
           className="twitter"
         >
           <Twitter />
-        </a>
+        </a> */}
 
         <a
-          href="mailto:hello@covid19india.org"
+          href="mailto:jun.a.kagaya@gmail.com"
           className="mail"
           target="_blank"
           rel="noopener noreferrer"
