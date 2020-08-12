@@ -376,7 +376,7 @@ export const STATE_NAMES = {
   LA: 'Ladakh',
   LD: 'Lakshadweep',
   PY: 'Puducherry',
-  TT: 'India',
+  TT: 'New Zealand',
   [UNASSIGNED_STATE_CODE]: 'Unassigned',
 };
 

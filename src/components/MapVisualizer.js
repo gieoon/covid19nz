@@ -132,8 +132,8 @@ function MapVisualizer({
 
   const fillColor = useCallback(
     (d) => {
-      const stateCode = STATE_CODES[d.properties.st_nm];
-      const district = d.properties.district;
+      const stateCode = STATE_CODES[d.properties.ID_2];
+      const district = d.properties.ID_1;
       const stateData = data[stateCode];
       const districtData = stateData?.districts?.[district];
       let n;
@@ -221,10 +221,13 @@ function MapVisualizer({
     const svg = select(svgRef.current);
     const T = transition().duration(D3_TRANSITION_DURATION);
 
+    // console.log("mapViz === MAP_VIZS.BUBBLES: ", mapViz === MAP_VIZS.BUBBLES);
+    // console.log("features: ", features);
     const regionSelection = svg
       .select('.regions')
       .selectAll('path')
       .data(mapViz !== MAP_VIZS.BUBBLES ? features : [], (d) => d.id)
+      .data(features, (d) => d.id)
       .join(
         (enter) =>
           enter
@@ -234,13 +237,16 @@ function MapVisualizer({
             .attr('stroke-opacity', 0)
             .style('cursor', 'pointer')
             .on('mouseenter', (d) => {
+              console.log('mouse entered region: ', d.properties);
               setRegionHighlighted({
                 stateCode: STATE_CODES[d.properties.ID_2],
                 districtName: d.properties.ID_1,
               });
             })
-            .attr('fill', '#fff0')
-            .attr('stroke', '#fff0')
+            // .attr('fill', '#fff0')
+            .attr('fill', '#fff')
+            // .attr('stroke', '#fff0')
+            .attr('stroke', '#fff')
             .call((enter) => {
               enter.append('title');
             }),
@@ -248,8 +254,10 @@ function MapVisualizer({
         (exit) =>
           exit
             .transition(T)
-            .attr('stroke', '#fff0')
-            .attr('fill', '#fff0')
+            // .attr('stroke', '#fff0')
+            .attr('stroke', '#fff')
+            // .attr('fill', '#fff0')
+            .attr('fill', '#fff')
             .remove()
       )
       .attr('pointer-events', 'all')
@@ -474,7 +482,7 @@ function MapVisualizer({
           const highlighted =
             stateName === d.properties.ID_2 &&
             ((!district && stateCode !== mapCode) ||
-              district === d.properties?.district ||
+              district === d.properties?.ID_1 ||
               mapView === MAP_VIEWS.STATES ||
               (district === UNKNOWN_DISTRICT_KEY && !d.properties.ID_1));
           return highlighted ? 1 : 0.25;
@@ -487,7 +495,7 @@ function MapVisualizer({
           const highlighted =
             stateName === d.properties.ID_2 &&
             ((!district && stateCode !== mapCode) ||
-              district === d.properties?.district ||
+              district === d.properties?.ID_1 ||
               mapView === MAP_VIEWS.STATES);
           if (highlighted) this.parentNode.appendChild(this);
           select(this).attr('stroke-opacity', highlighted ? 1 : 0);
