@@ -22,3 +22,6 @@ If you're new to contributing to Open Source on Github, [this guide](https://gui
 
 ## Deployment
 Deployed as subdomain to nz.covid19live.com
+
+## Checking DNS settings
+`nz.covid19live.com +noall +answer`
