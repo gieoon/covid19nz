@@ -7,7 +7,7 @@ import {
   MAP_VIZS,
   PRIMARY_STATISTICS,
   SPRING_CONFIG_NUMBERS,
-  STATE_NAMES,
+  CITY_NAMES,
   STATISTIC_CONFIGS,
   UNKNOWN_DISTRICT_KEY,
 } from '../constants';
@@ -75,7 +75,7 @@ function MapExplorer({
     return produce(hoveredData, (draft) => {
       draft.name =
         regionHighlighted.districtName ||
-        STATE_NAMES[regionHighlighted.stateCode];
+        CITY_NAMES[regionHighlighted.stateCode];
     });
   }, [data, regionHighlighted.stateCode, regionHighlighted.districtName]);
 
@@ -209,7 +209,7 @@ function MapExplorer({
           <h2 className={classnames(mapStatistic)}>
             {t(hoveredRegion.name)}
             {hoveredRegion.name === UNKNOWN_DISTRICT_KEY &&
-              ` [${t(STATE_NAMES[regionHighlighted.stateCode])}]`}
+              ` [${t(CITY_NAMES[regionHighlighted.stateCode])}]`}
           </h2>
 
           {regionHighlighted.stateCode && (

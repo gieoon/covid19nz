@@ -1,7 +1,7 @@
 import {
   STATE_CODES_ARRAY,
   STATE_CODES,
-  STATE_NAMES,
+  CITY_NAMES,
   UNASSIGNED_STATE_CODE,
   UNKNOWN_DISTRICT_KEY,
 } from '../constants';
@@ -293,7 +293,7 @@ function Search() {
                   <div className="result-name">
                     {`${result.name}`}
                     {result.type === 'district' &&
-                      `, ${STATE_NAMES[result.route]}`}
+                      `, ${CITY_NAMES[result.route]}`}
                   </div>
                 </div>
                 <div className="result-type">

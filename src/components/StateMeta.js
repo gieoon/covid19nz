@@ -1,6 +1,6 @@
 import StateMetaCard from './StateMetaCard';
 
-import {STATE_NAMES} from '../constants';
+import {CITY_NAMES} from '../constants';
 import {
   formatDate,
   formatNumber,
@@ -98,7 +98,7 @@ function StateMeta({stateCode, data, timeseries}) {
             ~${formatNumber(
               Math.round(confirmedPerMillion)
             )} out of every 10 lakh people in ${
-            STATE_NAMES[stateCode]
+            CITY_NAMES[stateCode]
           } have tested positive for the virus.
             `}
         />
@@ -181,7 +181,7 @@ function StateMeta({stateCode, data, timeseries}) {
           }
           description={
             testPerMillion > 0
-              ? `For every 10 lakh people in ${STATE_NAMES[stateCode]},
+              ? `For every 10 lakh people in ${CITY_NAMES[stateCode]},
                 ~${formatNumber(
                   Math.round(testPerMillion)
                 )} samples were tested.`

@@ -3,7 +3,7 @@ import TimeseriesLoader from './loaders/Timeseries';
 import {
   TIMESERIES_CHART_TYPES,
   TIMESERIES_LOOKBACKS,
-  STATE_NAMES,
+  CITY_NAMES,
 } from '../constants';
 import useIsVisible from '../hooks/useIsVisible';
 import {getIndiaYesterdayISO, parseIndiaDate} from '../utils/commonFunctions';
@@ -66,8 +66,9 @@ function TimeseriesExplorer({
   const regions = useMemo(() => {
     const states = Object.keys(timeseries || {})
       .filter((code) => code !== stateCode)
-      .sort((code1, code2) =>
-        STATE_NAMES[code1].localeCompare(STATE_NAMES[code2])
+      .sort((code1, code2) => {
+        CITY_NAMES[code1].localeCompare(CITY_NAMES[code2])
+      }
       )
       .map((code) => {
         return {
@@ -240,7 +241,7 @@ function TimeseriesExplorer({
               {dropdownRegions
                 .filter(
                   (region) =>
-                    STATE_NAMES[region.stateCode] !== region.districtName
+                    CITY_NAMES[region.stateCode] !== region.districtName
                 )
                 .map((region) => {
                   return (
@@ -250,7 +251,7 @@ function TimeseriesExplorer({
                     >
                       {region.districtName
                         ? t(region.districtName)
-                        : t(STATE_NAMES[region.stateCode])}
+                        : t(CITY_NAMES[region.stateCode])}
                     </option>
                   );
                 })}

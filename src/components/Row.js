@@ -4,7 +4,7 @@ import HeaderCell from './HeaderCell';
 import Tooltip from './Tooltip';
 
 import {
-  STATE_NAMES,
+  CITY_NAMES,
   STATISTIC_CONFIGS,
   TABLE_STATISTICS,
   TABLE_STATISTICS_EXPANDED,
@@ -137,7 +137,7 @@ function Row({
   let districtNameStr = t(districtName);
   if (districtName === UNKNOWN_DISTRICT_KEY) {
     districtNameStr = `${t(UNKNOWN_DISTRICT_KEY)} [${t(
-      STATE_NAMES[data.stateCode]
+      CITY_NAMES[data.stateCode]
     )}]`;
   }
 
@@ -182,7 +182,7 @@ function Row({
       >
         <div className="cell">
           <div className="state-name fadeInUp">
-            {t(STATE_NAMES[stateCode]) || districtNameStr}
+            {t(CITY_NAMES[stateCode]) || districtNameStr}
           </div>
           {data?.meta?.notes && (
             <Tooltip {...{data: data.meta.notes}}>
@@ -286,7 +286,7 @@ function Row({
       {showDistricts && (
         <div className="spacer-row">
           <div className="spacer">
-            <p>{`End of ${t(STATE_NAMES[stateCode])}'s districts`}</p>
+            <p>{`End of ${t(CITY_NAMES[stateCode])}'s districts`}</p>
             <div className="fold" onClick={handleCollapse}>
               <FoldUpIcon />
             </div>

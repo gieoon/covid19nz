@@ -5,7 +5,7 @@ import MapSwitcher from './MapSwitcher';
 import StateHeader from './StateHeader';
 import StateMeta from './StateMeta';
 
-import {API_ROOT_URL, STATE_NAMES} from '../constants';
+import {API_ROOT_URL, CITY_NAMES} from '../constants';
 import useIsVisible from '../hooks/useIsVisible';
 import {fetcher, formatNumber, getStatistic} from '../utils/commonFunctions';
 
@@ -114,11 +114,11 @@ function State() {
     <React.Fragment>
       <Helmet>
         <title>
-          Coronavirus Outbreak in {STATE_NAMES[stateCode]} - covid19india.org
+          Coronavirus Outbreak in {CITY_NAMES[stateCode]} - covid19india.org
         </title>
         <meta
           name="title"
-          content={`Coronavirus Outbreak in ${STATE_NAMES[stateCode]}: Latest Map and Case Count`}
+          content={`Coronavirus Outbreak in ${CITY_NAMES[stateCode]}: Latest Map and Case Count`}
         />
       </Helmet>
 

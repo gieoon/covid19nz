@@ -1,4 +1,4 @@
-import {MAP_META, STATE_NAMES} from '../constants';
+import {MAP_META, CITY_NAMES} from '../constants';
 
 import React, {useState, useCallback, useRef} from 'react';
 import {useTranslation} from 'react-i18next';
@@ -54,7 +54,7 @@ const StateDropdown = ({stateCode, trail}) => {
         style={trail}
         onClick={setShowDropdown.bind(this, !showDropdown)}
       >
-        {t(STATE_NAMES[stateCode])}
+        {t(CITY_NAMES[stateCode])}
       </animated.h1>
 
       {transitions.map(({item, key, props}) =>
@@ -66,7 +66,7 @@ const StateDropdown = ({stateCode, trail}) => {
                   stateCodeItr !== 'TT' && stateCodeItr !== stateCode
               )
               .sort((code1, code2) =>
-                STATE_NAMES[code1].localeCompare(STATE_NAMES[code2])
+                CITY_NAMES[code1].localeCompare(CITY_NAMES[code2])
               )
               .map((stateCodeItr) => (
                 <h1
@@ -74,7 +74,7 @@ const StateDropdown = ({stateCode, trail}) => {
                   className="item"
                   onClick={handleClick.bind(this, stateCodeItr)}
                 >
-                  {t(STATE_NAMES[stateCodeItr])}
+                  {t(CITY_NAMES[stateCodeItr])}
                 </h1>
               ))}
           </animated.div>

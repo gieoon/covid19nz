@@ -7,7 +7,7 @@ import {
   MAP_VIEWS,
   MAP_VIZS,
   STATE_CODES,
-  STATE_NAMES,
+  CITY_NAMES,
   STATISTIC_CONFIGS,
   UNKNOWN_DISTRICT_KEY,
 } from '../constants';
@@ -21,7 +21,7 @@ import {AlertIcon} from '@primer/octicons-v2-react';
 import classnames from 'classnames';
 import {max} from 'd3-array';
 import {json} from 'd3-fetch';
-import {geoIdentity, geoPath} from 'd3-geo';
+import {geoMercator, geoIdentity, geoPath} from 'd3-geo';
 import {scaleSqrt, scaleSequential} from 'd3-scale';
 // eslint-disable-next-line
 // import worker from 'workerize-loader!../workers/mapVisualizer';
@@ -124,10 +124,20 @@ function MapVisualizer({
       ).clamp(true);
     }
   }, [mapViz, statistic, statisticMax]);
+  // console.log("mapViz === MAP_VIZS.BUBBLES: ", mapViz === MAP_VIZS.BUBBLES)
 
   const path = useMemo(() => {
     if (!geoData) return null;
-    return geoPath(geoIdentity());
+    // return geoPath(geoIdentity());
+    console.log(mapMeta);
+    const topology = topojson.feature(
+      geoData,
+      // geoData.objects[mapMeta.graphObjectStates || mapMeta.graphObjectDistricts]
+      geoData.objects["NZL_adm2"]
+    );
+    // Have to change from original, which was geoIdentity, to using projection
+    const projection = geoMercator().fitSize([width, height], topology);
+    return geoPath(projection);
   }, [geoData]);
 
   const fillColor = useCallback(
@@ -237,16 +247,15 @@ function MapVisualizer({
             .attr('stroke-opacity', 0)
             .style('cursor', 'pointer')
             .on('mouseenter', (d) => {
-              console.log('mouse entered region: ', d.properties);
+              // console.log('mouse entered region: ', d.properties);
               setRegionHighlighted({
                 stateCode: STATE_CODES[d.properties.ID_2],
                 districtName: d.properties.ID_1,
               });
             })
-            // .attr('fill', '#fff0')
-            .attr('fill', '#fff')
-            // .attr('stroke', '#fff0')
-            .attr('stroke', '#fff')
+            .attr('fill', '#fff0')
+            // .attr('fill', '#fff')
+            .attr('stroke', '#fff0')
             .call((enter) => {
               enter.append('title');
             }),
@@ -254,10 +263,8 @@ function MapVisualizer({
         (exit) =>
           exit
             .transition(T)
-            // .attr('stroke', '#fff0')
-            .attr('stroke', '#fff')
-            // .attr('fill', '#fff0')
-            .attr('fill', '#fff')
+            .attr('stroke', '#fff0')
+            .attr('fill', '#fff0')
             .remove()
       )
       .attr('pointer-events', 'all')
@@ -469,7 +476,7 @@ function MapVisualizer({
   // Highlight
   useEffect(() => {
     const stateCode = regionHighlighted.stateCode;
-    const stateName = STATE_NAMES[stateCode];
+    const stateName = CITY_NAMES[stateCode];
     const district = regionHighlighted.districtName;
 
     const svg = select(svgRef.current);

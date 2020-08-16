@@ -17,7 +17,7 @@ function Footer() {
         </a>
       </div>
 
-      <h5>{t("We're keeping Kiwi's updated through these difficult times")}</h5>
+      <h5>{t("Keeping Kiwi's updated through these difficult times")}</h5>
 
       <div className="links">
         {/* <a

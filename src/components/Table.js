@@ -5,7 +5,7 @@ import TableDeltaHelper from './snippets/TableDeltaHelper';
 import {TABLE_FADE_IN, TABLE_FADE_OUT} from '../animations';
 import {
   DISTRICT_TABLE_COUNT,
-  STATE_NAMES,
+  CITY_NAMES,
   STATISTIC_CONFIGS,
   TABLE_STATISTICS,
   TABLE_STATISTICS_EXPANDED,
@@ -114,9 +114,9 @@ function Table({
           : statisticB - statisticA;
       } else {
         const regionNameA =
-          districts?.[regionKeyA]?.districtName || STATE_NAMES[regionKeyA];
+          districts?.[regionKeyA]?.districtName || CITY_NAMES[regionKeyA];
         const regionNameB =
-          districts?.[regionKeyB]?.districtName || STATE_NAMES[regionKeyB];
+          districts?.[regionKeyB]?.districtName || CITY_NAMES[regionKeyB];
         return sortData.isAscending
           ? regionNameA.localeCompare(regionNameB)
           : regionNameB.localeCompare(regionNameA);
