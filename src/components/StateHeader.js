@@ -37,7 +37,7 @@ function StateHeader({data, stateCode}) {
             {`Last Updated on ${formatDate(
               data.meta.last_updated,
               'dd MMM, p'
-            )} IST`}
+            )} NZST`}
           </h5>
         )}
       </div>

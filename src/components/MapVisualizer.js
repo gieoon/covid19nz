@@ -6,7 +6,7 @@ import {
   MAP_TYPES,
   MAP_VIEWS,
   MAP_VIZS,
-  STATE_CODES,
+  CITY_CODES,
   CITY_NAMES,
   STATISTIC_CONFIGS,
   UNKNOWN_DISTRICT_KEY,
@@ -42,6 +42,11 @@ import useSWR from 'swr';
 import * as topojson from 'topojson';
 
 const [width, height] = [432, 488];
+
+const CODE_1 = "DHB_code"; //ID_1;
+const CODE_2 = "MoH_Char_C"; //ID_2; 
+const NAME_1 = "DHB_NAME"; // NAME_1
+const NAME_2 = "";
 
 const colorInterpolator = (statistic) => {
   switch (statistic) {
@@ -129,7 +134,7 @@ function MapVisualizer({
   const path = useMemo(() => {
     if (!geoData) return null;
     // return geoPath(geoIdentity());
-    console.log(mapMeta);
+    // console.log(mapMeta);
     const topology = topojson.feature(
       geoData,
       // geoData.objects[mapMeta.graphObjectStates || mapMeta.graphObjectDistricts]
@@ -137,13 +142,15 @@ function MapVisualizer({
     );
     // Have to change from original, which was geoIdentity, to using projection
     const projection = geoMercator().fitSize([width, height], topology);
+    // console.log(projection)
     return geoPath(projection);
+    // return geoPath(geoIdentity());
   }, [geoData]);
 
   const fillColor = useCallback(
     (d) => {
-      const stateCode = STATE_CODES[d.properties.ID_2];
-      const district = d.properties.ID_1;
+      const stateCode = CITY_CODES[d.properties[CODE_2]];
+      const district = d.properties[CODE_1];
       const stateData = data[stateCode];
       const districtData = stateData?.districts?.[district];
       let n;
@@ -178,8 +185,8 @@ function MapVisualizer({
 
     // Add id to each feature
     return featuresWrap.map((feature) => {
-      const district = feature.properties.ID_1;
-      const state = feature.properties.ID_2;
+      const district = feature.properties[CODE_1];
+      const state = feature.properties[CODE_2];
       const obj = Object.assign({}, feature);
       obj.id = `${mapCode}-${state}${district ? '-' + district : ''}`;
       return obj;
@@ -190,9 +197,9 @@ function MapVisualizer({
     (regionSelection) => {
       regionSelection.select('title').text((d) => {
         if (mapViz === MAP_VIZS.CHOROPLETH) {
-          const state = d.properties.ID_2;
-          const stateCode = STATE_CODES[state];
-          const district = d.properties.ID_1;
+          const state = d.properties[CODE_2];
+          const stateCode = CITY_CODES[state];
+          const district = d.properties[CODE_1];
 
           const stateData = data[stateCode];
           const districtData = stateData?.districts?.[district];
@@ -232,7 +239,7 @@ function MapVisualizer({
     const T = transition().duration(D3_TRANSITION_DURATION);
 
     // console.log("mapViz === MAP_VIZS.BUBBLES: ", mapViz === MAP_VIZS.BUBBLES);
-    // console.log("features: ", features);
+    console.log("features: ", features);
     const regionSelection = svg
       .select('.regions')
       .selectAll('path')
@@ -247,10 +254,10 @@ function MapVisualizer({
             .attr('stroke-opacity', 0)
             .style('cursor', 'pointer')
             .on('mouseenter', (d) => {
-              // console.log('mouse entered region: ', d.properties);
+              console.log('mouse entered region: ', d.properties);
               setRegionHighlighted({
-                stateCode: STATE_CODES[d.properties.ID_2],
-                districtName: d.properties.ID_1,
+                stateCode: CITY_CODES[d.properties[CODE_2]],
+                districtName: d.properties[NAME_1] + (d.properties[NAME_2] !== d.properties[NAME_1] ? ", " + d.properties[NAME_2] : ""),
               });
             })
             .attr('fill', '#fff0')
@@ -274,7 +281,7 @@ function MapVisualizer({
       })
       .on('click', (d) => {
         event.stopPropagation();
-        const stateCode = STATE_CODES[d.properties.ID_2];
+        const stateCode = CITY_CODES[d.properties[CODE_2]];
         if (
           onceTouchedRegion.current ||
           mapMeta.mapType === MAP_TYPES.STATE ||
@@ -325,8 +332,8 @@ function MapVisualizer({
     if (mapViz === MAP_VIZS.BUBBLES) {
       circlesData = features
         .map((feature) => {
-          const stateCode = STATE_CODES[feature.properties.ID_2];
-          const districtName = feature.properties.ID_1;
+          const stateCode = CITY_CODES[feature.properties[CODE_2]];
+          const districtName = feature.properties[CODE_1];
           const stateData = data[stateCode];
 
           if (mapView === MAP_VIEWS.STATES) {
@@ -367,12 +374,14 @@ function MapVisualizer({
         (exit) => exit.call((exit) => exit.transition(T).attr('r', 0).remove())
       )
       .on('mouseenter', (feature) => {
+        // console.log(feature)
         setRegionHighlighted({
-          stateCode: STATE_CODES[feature.properties.ID_2],
+          stateCode: CITY_CODES[feature.properties[CODE_2]],
           districtName:
             mapView === MAP_VIEWS.STATES
               ? null
-              : feature.properties.district || UNKNOWN_DISTRICT_KEY,
+              : feature.properties[NAME_1] + (feature.properties[NAME_2] !== feature.properties[NAME_1] ? ", " + feature.properties[NAME_2] : ""),
+              //: feature.properties.CODE_1 || UNKNOWN_DISTRICT_KEY,
         });
       })
       .on('touchstart', (feature) => {
@@ -385,7 +394,7 @@ function MapVisualizer({
         if (onceTouchedRegion.current || mapMeta.mapType === MAP_TYPES.STATE)
           return;
         history.push(
-          `/state/${STATE_CODES[feature.properties.ID_2]}${
+          `/state/${CITY_CODES[feature.properties[CODE_2]]}${
             window.innerWidth < 769 ? '#MapExplorer' : ''
           }`
         );
@@ -487,11 +496,11 @@ function MapVisualizer({
         .selectAll('circle')
         .attr('fill-opacity', (d) => {
           const highlighted =
-            stateName === d.properties.ID_2 &&
+            stateName === d.properties[CODE_2] &&
             ((!district && stateCode !== mapCode) ||
-              district === d.properties?.ID_1 ||
+              district === d.properties[CODE_1] ||
               mapView === MAP_VIEWS.STATES ||
-              (district === UNKNOWN_DISTRICT_KEY && !d.properties.ID_1));
+              (district === UNKNOWN_DISTRICT_KEY && !d.properties[CODE_1]));
           return highlighted ? 1 : 0.25;
         });
     } else {
@@ -500,9 +509,9 @@ function MapVisualizer({
         .selectAll('path')
         .each(function (d) {
           const highlighted =
-            stateName === d.properties.ID_2 &&
+            stateName === d.properties[CODE_2] &&
             ((!district && stateCode !== mapCode) ||
-              district === d.properties?.ID_1 ||
+              district === d.properties[CODE_1] ||
               mapView === MAP_VIEWS.STATES);
           if (highlighted) this.parentNode.appendChild(this);
           select(this).attr('stroke-opacity', highlighted ? 1 : 0);

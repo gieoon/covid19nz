@@ -381,6 +381,7 @@ function Table({
 }
 
 const isEqual = (prevProps, currProps) => {
+  // console.log(prevProps.data['TT'], currProps.data['TT'])
   if (
     !equal(
       prevProps.regionHighlighted?.districtName,

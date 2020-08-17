@@ -33,6 +33,8 @@ function Home() {
     'active'
   );
   const [date, setDate] = useState('');
+  // const [date, setDate] = useState('2020-07-21');
+
   const location = useLocation();
 
   const {data: timeseries} = useStickySWR(
@@ -44,8 +46,12 @@ function Home() {
     }
   );
 
+  // console.log(date)
+
   const {data} = useStickySWR(
     `${API_ROOT_URL}/data${date ? `-${date}` : ''}.min.json`,
+    // `${API_ROOT_URL}/timeseries.min.json`,
+    // `https://api.covid19india.org/v4/min/data${date ? `-${date}` : ''}.min.json`,
     fetcher,
     {
       revalidateOnMount: true,

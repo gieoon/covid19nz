@@ -1,6 +1,6 @@
 import {
-  STATE_CODES_ARRAY,
-  STATE_CODES,
+  CITY_CODES_ARRAY,
+  CITY_CODES,
   CITY_NAMES,
   UNASSIGNED_STATE_CODE,
   UNKNOWN_DISTRICT_KEY,
@@ -15,27 +15,15 @@ import {useDebounce, useUpdateEffect} from 'react-use';
 
 const suggestions = [
   'Auckland',
-  'Christchurch',
-  'Wellington',
-  'Hamilton',
-  'Dunedin',
+  'Waitemata',
+  'Waikato',
+  'Hawke\'s Bay',
+  'Southern',
 ];
 
-const districtSuggestions = [
-  'Auckland',
-  'Christchurch',
-  'Wellington',
-  'Hamilton',
-  'Dunedin',
-];
+const districtSuggestions = suggestions;
 
-const stateSuggestions = [
-  'Auckland',
-  'Christchurch',
-  'Wellington',
-  'Hamilton',
-  'Dunedin',
-];
+const stateSuggestions = suggestions;
 
 function Search() {
   const [searchValue, setSearchValue] = useState('');
@@ -53,7 +41,7 @@ function Search() {
         // eslint-disable-next-line
         new Bloodhound.default({
           initialize: true,
-          local: STATE_CODES_ARRAY.filter(
+          local: CITY_CODES_ARRAY.filter(
             ({code}) => code !== UNASSIGNED_STATE_CODE
           ),
           queryTokenizer: Bloodhound.default.tokenizers.whitespace,
@@ -121,7 +109,7 @@ function Search() {
           const districtObj = {
             name: result.district,
             type: 'district',
-            route: STATE_CODES[result.state],
+            route: CITY_CODES[result.state],
           };
           results.push(districtObj);
           return null;
@@ -255,7 +243,7 @@ function Search() {
   return (
     <div className="Search">
       <label className="fadeInUp" style={trail[0]}>
-        {t('Search your district or state')}
+        {t('Search your district health board')}
       </label>
       <div className="line fadeInUp" style={trail[1]}></div>
 
