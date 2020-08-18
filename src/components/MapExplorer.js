@@ -66,12 +66,14 @@ function MapExplorer({
     mapMeta.mapType === MAP_TYPES.COUNTRY ? data : {[mapCode]: data[mapCode]};
 
   const hoveredRegion = useMemo(() => {
+    // console.log(regionHighlighted.stateCode, regionHighlighted.stateCode, data)
     const hoveredData =
-      (regionHighlighted.districtName
-        ? data[TOPO2CITY_NAME[regionHighlighted.stateCode]]?.districts?.[
-            regionHighlighted.districtName
-          ]
-        : data[TOPO2CITY_NAME[regionHighlighted.stateCode]]) || {};
+      data[regionHighlighted.stateCode] || {};
+      // (regionHighlighted.districtName
+      //   ? data[regionHighlighted.stateCode]?.districts?.[
+      //       regionHighlighted.districtName
+      //     ]
+      //   : data[regionHighlighted.stateCode]) || {};
 
     return produce(hoveredData, (draft) => {
       draft.name =
@@ -172,7 +174,7 @@ function MapExplorer({
     return styles;
   }, []);
 
-  console.log("hoveredRegion: ", hoveredRegion)
+  // console.log("hoveredRegion: ", hoveredRegion)
   const spring = useSpring({
     total: getStatistic(hoveredRegion, 'total', mapStatistic),
     config: {tension: 250, ...SPRING_CONFIG_NUMBERS},

@@ -31,7 +31,7 @@ function MapLegend({data, mapViz, mapScale, statistic}) {
       ({width, height} = wrapperRef.current.getBoundingClientRect());
 
     if (!width || !height) return;
-
+    // console.log(width, height, mapViz === MAP_VIZS.BUBBLES);
     if (mapViz === MAP_VIZS.BUBBLES) {
       const t = svg.transition().duration(D3_TRANSITION_DURATION);
       svg
@@ -316,7 +316,7 @@ function legend({
 
     tickAdjust = () => {};
   }
-
+  // console.log(height, marginBottom)
   svg
     .select('.axis')
     .attr('transform', `translate(0,${height - marginBottom})`)

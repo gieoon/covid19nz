@@ -317,7 +317,7 @@ function Table({
             Object.keys(states)
               .filter(
                 (stateCode) =>
-                  stateCode !== 'TT' &&
+                  stateCode !== 'TT' && //stateCode !== 'New Zealand' &&
                   !(stateCode === UNASSIGNED_STATE_CODE && isPerMillion)
               )
               .sort((a, b) => sortingFunction(a, b))

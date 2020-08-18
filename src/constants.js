@@ -247,7 +247,7 @@ export const CITY_NAMES = {
 // The district name stored in topojson
 export const TOPO2CITY_NAME = {
   "NLD": "Northland",
-  "NWA": "Waitemate",
+  "NWA": "Waitemata",
   "CAK": "Auckland",
   "SAK": "Counties Manukau",
   "WKO": "Waikato",
@@ -266,6 +266,7 @@ export const TOPO2CITY_NAME = {
   "CTY": "Canterbury",
   "SCY": "South Canterbury",
   "SRN": "Southern",
+  "TT": "New Zealand"
 }
 
 /*

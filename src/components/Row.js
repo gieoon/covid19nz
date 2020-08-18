@@ -9,6 +9,7 @@ import {
   TABLE_STATISTICS,
   TABLE_STATISTICS_EXPANDED,
   UNKNOWN_DISTRICT_KEY,
+  TOPO2CITY_NAME,
 } from '../constants';
 import {
   capitalize,
@@ -182,7 +183,7 @@ function Row({
       >
         <div className="cell">
           <div className="state-name fadeInUp">
-            {t(CITY_NAMES[stateCode]) || districtNameStr}
+            {t(CITY_NAMES[TOPO2CITY_NAME[stateCode]]) || CITY_NAMES[stateCode] || districtNameStr}
           </div>
           {data?.meta?.notes && (
             <Tooltip {...{data: data.meta.notes}}>

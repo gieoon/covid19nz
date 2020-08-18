@@ -10,6 +10,7 @@ import {
   CITY_NAMES,
   STATISTIC_CONFIGS,
   UNKNOWN_DISTRICT_KEY,
+  TOPO2CITY_NAME,
   // TOPO2CITY_NAME,
 } from '../constants';
 import {
@@ -98,20 +99,21 @@ function MapVisualizer({
   const statisticMax = useMemo(() => {
     const stateCodes = Object.keys(data).filter(
       (stateCode) =>
-        stateCode !== 'TT' && Object.keys(MAP_META).includes(stateCode)
+        stateCode !== 'TT' //&& Object.keys(MAP_META).includes(stateCode)
     );
-
-    return mapView === MAP_VIEWS.STATES
-      ? max(stateCodes, (stateCode) =>
+    return max(stateCodes, (stateCode) => getTotalStatistic(data[stateCode], statistic))
+    // mapView === MAP_VIEWS.STATES || mapView === MAP_VIEWS.COUNTRY
+      // ?
+       max(stateCodes, (stateCode) =>
           getTotalStatistic(data[stateCode], statistic)
         )
-      : max(stateCodes, (stateCode) =>
-          data[stateCode]?.districts
-            ? max(Object.values(data[stateCode].districts), (districtData) =>
-                getTotalStatistic(districtData, statistic)
-              )
-            : 0
-        );
+      // : max(stateCodes, (stateCode) =>
+      //     data[stateCode]?.districts
+      //       ? max(Object.values(data[stateCode].districts), (districtData) =>
+      //           getTotalStatistic(districtData, statistic)
+      //         )
+      //       : 0
+      //   );
   }, [data, mapView, statistic]);
 
   const statisticTotal = useMemo(() => {
@@ -166,14 +168,18 @@ function MapVisualizer({
 
   const fillColor = useCallback(
     (d) => {
-      const stateCode = CITY_CODES[d.properties[CODE_2]];
-      const district = d.properties[CODE_1];
+      const stateCode = CITY_CODES[TOPO2CITY_NAME[d.properties[CODE_2]]];
+      // console.log("stateCode: ", stateCode)
+      // const district = d.properties[CODE_1];
       const stateData = data[stateCode];
-      const districtData = stateData?.districts?.[district];
+      // const districtData = stateData?.districts?.[district];
       let n;
-      if (district) n = getTotalStatistic(districtData, statistic);
-      else n = getTotalStatistic(stateData, statistic);
+      // if (district) n = getTotalStatistic(districtData, statistic);
+      //else 
+      n = getTotalStatistic(stateData, statistic);
+      // console.log(n, mapScale(n));
       const color = n === 0 ? '#ffffff00' : mapScale(n);
+      console.log(color)
       return color;
     },
     [data, mapScale, statistic]
@@ -256,7 +262,7 @@ function MapVisualizer({
     const T = transition().duration(D3_TRANSITION_DURATION);
 
     // console.log("mapViz === MAP_VIZS.BUBBLES: ", mapViz === MAP_VIZS.BUBBLES);
-    console.log("features: ", features);
+    // console.log("features: ", features);
     const regionSelection = svg
       .select('.regions')
       .selectAll('path')
@@ -272,9 +278,9 @@ function MapVisualizer({
             .style('cursor', 'pointer')
             .on('mouseenter', (d) => {
               // console.log('mouse entered region: ', d.properties);
-              console.log('CITY_CODES[d.properties[CODE_2]]: ', d.properties[CODE_2])
+              // console.log('CITY_CODES[d.properties[CODE_2]]: ', d.properties[CODE_2])
               setRegionHighlighted({
-                stateCode: CITY_CODES[d.properties[CODE_2]],
+                stateCode: CITY_CODES[TOPO2CITY_NAME[d.properties[CODE_2]]],
                 districtName: d.properties[NAME_1]// + (d.properties[NAME_2] !== d.properties[NAME_1] && d.properties[NAME_1] ? ", " + d.properties[NAME_2] : ""),
               });
             })
@@ -298,7 +304,7 @@ function MapVisualizer({
       })
       .on('click', (d) => {
         event.stopPropagation();
-        const stateCode = CITY_CODES[d.properties[CODE_2]];
+        const stateCode = CITY_CODES[TOPO2CITY_NAME[d.properties[CODE_2]]];
         if (
           onceTouchedRegion.current ||
           mapMeta.mapType === MAP_TYPES.STATE ||
@@ -349,22 +355,25 @@ function MapVisualizer({
     if (mapViz === MAP_VIZS.BUBBLES) {
       circlesData = features
         .map((feature) => {
-          const stateCode = CITY_CODES[feature.properties[CODE_2]];
+          const stateCode = CITY_CODES[TOPO2CITY_NAME[feature.properties[CODE_2]]];
           const districtName = feature.properties[CODE_1];
           const stateData = data[stateCode];
+        
+          // console.log('mapView === MAP_VIEWS.STATES: ', mapView === MAP_VIEWS.STATES);
 
           if (mapView === MAP_VIEWS.STATES) {
             feature.value = getTotalStatistic(stateData, statistic);
           } else if (mapView === MAP_VIEWS.DISTRICTS) {
-            const districtData = stateData?.districts?.[districtName];
-
-            if (districtName)
+            // const districtData = stateData?.districts?.[districtName];
+            const districtData = stateData;
+            // console.log(districtData, statistic)
+            // if (districtName)
               feature.value = getTotalStatistic(districtData, statistic);
-            else
-              feature.value = getTotalStatistic(
-                stateData?.districts?.[UNKNOWN_DISTRICT_KEY],
-                statistic
-              );
+            // else
+            //   feature.value = getTotalStatistic(
+            //     stateData?.districts?.[UNKNOWN_DISTRICT_KEY],
+            //     statistic
+            //   );
           }
 
           return feature;
@@ -393,7 +402,7 @@ function MapVisualizer({
       .on('mouseenter', (feature) => {
         
         setRegionHighlighted({
-          stateCode: CITY_CODES[feature.properties[CODE_2]],
+          stateCode: CITY_CODES[TOPO2CITY_NAME[feature.properties[CODE_2]]],
           districtName:
             mapView === MAP_VIEWS.STATES
               ? null
@@ -419,7 +428,9 @@ function MapVisualizer({
       .transition(T)
       .attr('fill', STATISTIC_CONFIGS[statistic].color + '70')
       .attr('stroke', STATISTIC_CONFIGS[statistic].color + '70')
-      .attr('r', (feature) => mapScale(feature.value));
+      .attr('r', (feature) => {
+        return mapScale(feature.value);
+      });
   }, [
     mapMeta.mapType,
     mapViz,
