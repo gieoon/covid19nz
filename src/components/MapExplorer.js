@@ -10,6 +10,7 @@ import {
   CITY_NAMES,
   STATISTIC_CONFIGS,
   UNKNOWN_DISTRICT_KEY,
+  TOPO2CITY_NAME
 } from '../constants';
 import {formatNumber, getStatistic, capitalize} from '../utils/commonFunctions';
 
@@ -67,15 +68,15 @@ function MapExplorer({
   const hoveredRegion = useMemo(() => {
     const hoveredData =
       (regionHighlighted.districtName
-        ? data[regionHighlighted.stateCode]?.districts?.[
+        ? data[TOPO2CITY_NAME[regionHighlighted.stateCode]]?.districts?.[
             regionHighlighted.districtName
           ]
-        : data[regionHighlighted.stateCode]) || {};
+        : data[TOPO2CITY_NAME[regionHighlighted.stateCode]]) || {};
 
     return produce(hoveredData, (draft) => {
       draft.name =
         regionHighlighted.districtName ||
-        CITY_NAMES[regionHighlighted.stateCode];
+        CITY_NAMES[TOPO2CITY_NAME[regionHighlighted.stateCode]];
     });
   }, [data, regionHighlighted.stateCode, regionHighlighted.districtName]);
 
@@ -171,6 +172,7 @@ function MapExplorer({
     return styles;
   }, []);
 
+  console.log("hoveredRegion: ", hoveredRegion)
   const spring = useSpring({
     total: getStatistic(hoveredRegion, 'total', mapStatistic),
     config: {tension: 250, ...SPRING_CONFIG_NUMBERS},
@@ -193,6 +195,7 @@ function MapExplorer({
 
   const statisticConfig = STATISTIC_CONFIGS[mapStatistic];
 
+  // console.log("regionHighlighted.stateCode: ", regionHighlighted.stateCode)
   return (
     <div
       className={classnames(

@@ -121,6 +121,7 @@ export const getStatistic = (data, type, statistic, perMillion = false) => {
       !STATISTIC_OPTIONS[statistic]?.normalizeByKey &&
       PER_MILLION_OPTIONS),
   };
+  // console.log("data: ", data)
 
   let count;
   if (key === 'population') {

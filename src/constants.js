@@ -202,10 +202,20 @@ export const MAP_META = {
   //   geoDataFile: `${MAPS_DIR}/new-zealand-districts.json`,
   //   mapType: MAP_TYPES.COUNTRY,
   // },
+  // TT: {
+  //   geoDataFile: `${MAPS_DIR}/5.9-kx-small-district-health-board-2015.json`,
+  //   mapType: MAP_TYPES.COUNTRY,
+  // }
+  //https://mapshaper.org/
   TT: {
-    geoDataFile: `${MAPS_DIR}/NZ_District_Health_Board_boundaries.json`,
+    geoDataFile: `${MAPS_DIR}/0.21-NZ_District_Health_Board_boundaries.json`,
     mapType: MAP_TYPES.COUNTRY,
-  },
+  }
+  // TT: {
+  //   // This file is too big
+  //   geoDataFile: `${MAPS_DIR}/NZ_District_Health_Board_boundaries.json`,
+  //   mapType: MAP_TYPES.COUNTRY,
+  // },
 };
 
 export const MAP_LEGEND_HEIGHT = 50;
@@ -232,6 +242,30 @@ export const CITY_NAMES = {
   'West Coast': 'West Coast',
   'Whanganui': 'Whanganui',
   'New Zealand': 'New Zealand'
+}
+
+// The district name stored in topojson
+export const TOPO2CITY_NAME = {
+  "NLD": "Northland",
+  "NWA": "Waitemate",
+  "CAK": "Auckland",
+  "SAK": "Counties Manukau",
+  "WKO": "Waikato",
+  "LKS": "Lakes",
+  "BOP": "Bay of Plenty",
+  "TRW": "Tairawhiti",
+  "TKI": "Taranaki",
+  "HWB": "Hawke's Bay",
+  "WNI": "Whanganui",
+  "MWU": "Midcentral",
+  "HUT": "Hutt Valley",
+  "CAP": "Capital and Coast",
+  "WRP": "Wairarapa",
+  "NLM": "Nelson Marlborough",
+  "WCO": "West Coast",
+  "CTY": "Canterbury",
+  "SCY": "South Canterbury",
+  "SRN": "Southern",
 }
 
 /*

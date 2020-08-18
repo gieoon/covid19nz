@@ -10,6 +10,7 @@ import {
   CITY_NAMES,
   STATISTIC_CONFIGS,
   UNKNOWN_DISTRICT_KEY,
+  // TOPO2CITY_NAME,
 } from '../constants';
 import {
   formatNumber,
@@ -21,7 +22,7 @@ import {AlertIcon} from '@primer/octicons-v2-react';
 import classnames from 'classnames';
 import {max} from 'd3-array';
 import {json} from 'd3-fetch';
-import {geoMercator, geoIdentity, geoPath} from 'd3-geo';
+import {geoMercator, geoTransverseMercator, geoIdentity, geoPath} from 'd3-geo';
 import {scaleSqrt, scaleSequential} from 'd3-scale';
 // eslint-disable-next-line
 // import worker from 'workerize-loader!../workers/mapVisualizer';
@@ -45,7 +46,7 @@ const [width, height] = [432, 488];
 
 const CODE_1 = "DHB_code"; //ID_1;
 const CODE_2 = "MoH_Char_C"; //ID_2; 
-const NAME_1 = "DHB_NAME"; // NAME_1
+const NAME_1 = "DHB_name"; // NAME_1
 const NAME_2 = "";
 
 const colorInterpolator = (statistic) => {
@@ -133,17 +134,33 @@ function MapVisualizer({
 
   const path = useMemo(() => {
     if (!geoData) return null;
-    // return geoPath(geoIdentity());
+    
     // console.log(mapMeta);
     const topology = topojson.feature(
       geoData,
       // geoData.objects[mapMeta.graphObjectStates || mapMeta.graphObjectDistricts]
       geoData.objects["NZL_adm2"]
     );
+    // return geoPath(geoMercator().fitSize([width, height], topology));
+    // return geoIdentity()
+      // .reflectY(true)
+      // .fitSize([width, height], topology)
+
     // Have to change from original, which was geoIdentity, to using projection
-    const projection = geoMercator().fitSize([width, height], topology);
+    // const projection = geoMercator()
+      // .fitSize([width, height], topology)
+      // .translate([width / 2, height / 2])
+      // .precision(0.5);
     // console.log(projection)
-    return geoPath(projection);
+    // return geoPath(null)
+    return geoPath(
+      geoTransverseMercator()
+      .reflectY(true)
+      .reflectX(true)
+      .fitSize([width, height], topology)
+    )
+    return geoPath(geoIdentity().fitSize([width, height], topology))
+    // return geoPath(projection);
     // return geoPath(geoIdentity());
   }, [geoData]);
 
@@ -254,14 +271,14 @@ function MapVisualizer({
             .attr('stroke-opacity', 0)
             .style('cursor', 'pointer')
             .on('mouseenter', (d) => {
-              console.log('mouse entered region: ', d.properties);
+              // console.log('mouse entered region: ', d.properties);
+              console.log('CITY_CODES[d.properties[CODE_2]]: ', d.properties[CODE_2])
               setRegionHighlighted({
                 stateCode: CITY_CODES[d.properties[CODE_2]],
-                districtName: d.properties[NAME_1] + (d.properties[NAME_2] !== d.properties[NAME_1] ? ", " + d.properties[NAME_2] : ""),
+                districtName: d.properties[NAME_1]// + (d.properties[NAME_2] !== d.properties[NAME_1] && d.properties[NAME_1] ? ", " + d.properties[NAME_2] : ""),
               });
             })
             .attr('fill', '#fff0')
-            // .attr('fill', '#fff')
             .attr('stroke', '#fff0')
             .call((enter) => {
               enter.append('title');
@@ -374,13 +391,13 @@ function MapVisualizer({
         (exit) => exit.call((exit) => exit.transition(T).attr('r', 0).remove())
       )
       .on('mouseenter', (feature) => {
-        // console.log(feature)
+        
         setRegionHighlighted({
           stateCode: CITY_CODES[feature.properties[CODE_2]],
           districtName:
             mapView === MAP_VIEWS.STATES
               ? null
-              : feature.properties[NAME_1] + (feature.properties[NAME_2] !== feature.properties[NAME_1] ? ", " + feature.properties[NAME_2] : ""),
+              : feature.properties[NAME_1]// + (feature.properties[NAME_2] !== feature.properties[NAME_1] && feature.properties[NAME_1] ? ", " + feature.properties[NAME_2] : ""),
               //: feature.properties.CODE_1 || UNKNOWN_DISTRICT_KEY,
         });
       })
