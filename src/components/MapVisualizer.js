@@ -161,26 +161,50 @@ function MapVisualizer({
       .reflectX(true)
       .fitSize([width, height], topology)
     )
-    return geoPath(geoIdentity().fitSize([width, height], topology))
+    // return geoPath(geoIdentity().fitSize([width, height], topology))
     // return geoPath(projection);
     // return geoPath(geoIdentity());
   }, [geoData]);
 
+  // const fillOpacity = useCallback(
+  //   (alpha) => {
+  //     // console.log(alpha, STATISTIC_CONFIGS[statistic].color);
+  //     return mapViz === MAP_VIZS.CHOROPLETH ? '1' : '0'
+  //   },
+  //   [data, mapScale, statistic, mapViz]
+  // )
+  
+  // https://css-tricks.com/8-digit-hex-codes/
   const fillColor = useCallback(
+    // 'rgba(255,255,255,0)'
     (d) => {
+      // console.log(d)
+      if(!d) return 'rgba(255,255,255,0)';
       const stateCode = CITY_CODES[TOPO2CITY_NAME[d.properties[CODE_2]]];
-      // console.log("stateCode: ", stateCode)
-      // const district = d.properties[CODE_1];
       const stateData = data[stateCode];
-      // const districtData = stateData?.districts?.[district];
       let n;
-      // if (district) n = getTotalStatistic(districtData, statistic);
-      //else 
-      n = getTotalStatistic(stateData, statistic);
-      // console.log(n, mapScale(n));
-      const color = n === 0 ? '#ffffff00' : mapScale(n);
-      console.log(color)
-      return color;
+      if (mapViz === MAP_VIZS.CHOROPLETH) {
+        // return 'rgba(255,255,255,1)'
+        
+        n = getTotalStatistic(stateData, statistic);
+        n = mapScale(n);
+        // n = "rgba(255,0,0,1)";
+        Array.from(document.getElementsByClassName('region')).forEach(
+          el => el.style.opacity = 1
+        );
+      }
+      else if(mapViz === MAP_VIZS.BUBBLES){
+        n = "rgba(255,255,255,0)";
+        
+      }
+      // console.log("new color: ", n)
+      // else 
+      //   n = "#ffffff00";
+        // n = 'rgba(255,255,255,1)'
+      // const color = n === 0 ? '#ffffff00' : 
+      // const color = n === 0 ? 'rgba(255,255,255,1)' : mapScale(n);
+      // const color = n === 0 ? 'rgb(255,255,255)' : 'rgb(255,0,0)';
+      return n;
     },
     [data, mapScale, statistic]
   );
@@ -195,7 +219,7 @@ function MapVisualizer({
   const features = useMemo(() => {
     if (!geoData) return null;
     const featuresWrap =
-      mapView === MAP_VIEWS.STATES
+      mapView === MAP_VIEWS.COUNTRY
         // ? topojson.feature(geoData, geoData.objects.states).features
         ? topojson.feature(geoData, geoData.objects.NZL_adm2).features
         : mapMeta.mapType === MAP_TYPES.COUNTRY && mapViz === MAP_VIZS.BUBBLES
@@ -273,6 +297,7 @@ function MapVisualizer({
           enter
             .append('path')
             .attr('d', path)
+            .attr("class", "region")
             .attr('stroke-width', 1.8)
             .attr('stroke-opacity', 0)
             .style('cursor', 'pointer')
@@ -285,6 +310,7 @@ function MapVisualizer({
               });
             })
             .attr('fill', '#fff0')
+            // .attr('fill', fillColor)
             .attr('stroke', '#fff0')
             .call((enter) => {
               enter.append('title');
@@ -295,6 +321,7 @@ function MapVisualizer({
             .transition(T)
             .attr('stroke', '#fff0')
             .attr('fill', '#fff0')
+            // .attr('fill', fillColor)
             .remove()
       )
       .attr('pointer-events', 'all')
@@ -315,14 +342,15 @@ function MapVisualizer({
         svg.attr('pointer-events', 'none');
         svg.select('.regions').selectAll('path').attr('pointer-events', 'none');
         // Switch map
-        history.push(
-          `/state/${stateCode}${window.innerWidth < 769 ? '#MapExplorer' : ''}`
-        );
+        // history.push(
+        //   `/state/${stateCode}${window.innerWidth < 769 ? '#MapExplorer' : ''}`
+        // );
       })
       .call((sel) => {
-        sel
+        return sel
           .transition(T)
           .attr('fill', fillColor)
+          // .attr('fill', '#fff0')
           .attr('stroke', strokeColor.bind(this, ''));
       });
 
@@ -341,6 +369,7 @@ function MapVisualizer({
     populateTexts,
     setRegionHighlighted,
     strokeColor,
+    // fillOpacity,
   ]);
 
   // Bubble
@@ -356,12 +385,10 @@ function MapVisualizer({
       circlesData = features
         .map((feature) => {
           const stateCode = CITY_CODES[TOPO2CITY_NAME[feature.properties[CODE_2]]];
-          const districtName = feature.properties[CODE_1];
+          // const districtName = feature.properties[CODE_1];
           const stateData = data[stateCode];
-        
-          // console.log('mapView === MAP_VIEWS.STATES: ', mapView === MAP_VIEWS.STATES);
 
-          if (mapView === MAP_VIEWS.STATES) {
+          if (mapView === MAP_VIEWS.COUNTRY) {
             feature.value = getTotalStatistic(stateData, statistic);
           } else if (mapView === MAP_VIEWS.DISTRICTS) {
             // const districtData = stateData?.districts?.[districtName];
@@ -404,7 +431,7 @@ function MapVisualizer({
         setRegionHighlighted({
           stateCode: CITY_CODES[TOPO2CITY_NAME[feature.properties[CODE_2]]],
           districtName:
-            mapView === MAP_VIEWS.STATES
+            mapView === MAP_VIEWS.COUNTRY
               ? null
               : feature.properties[NAME_1]// + (feature.properties[NAME_2] !== feature.properties[NAME_1] && feature.properties[NAME_1] ? ", " + feature.properties[NAME_2] : ""),
               //: feature.properties.CODE_1 || UNKNOWN_DISTRICT_KEY,
@@ -419,11 +446,11 @@ function MapVisualizer({
         event.stopPropagation();
         if (onceTouchedRegion.current || mapMeta.mapType === MAP_TYPES.STATE)
           return;
-        history.push(
-          `/state/${CITY_CODES[feature.properties[CODE_2]]}${
-            window.innerWidth < 769 ? '#MapExplorer' : ''
-          }`
-        );
+        // history.push(
+        //   `/state/${CITY_CODES[feature.properties[CODE_2]]}${
+        //     window.innerWidth < 769 ? '#MapExplorer' : ''
+        //   }`
+        // );
       })
       .transition(T)
       .attr('fill', STATISTIC_CONFIGS[statistic].color + '70')
@@ -514,8 +541,8 @@ function MapVisualizer({
   useEffect(() => {
     const stateCode = regionHighlighted.stateCode;
     const stateName = CITY_NAMES[stateCode];
-    const district = regionHighlighted.districtName;
-
+    // const district = regionHighlighted.districtName;
+    // console.log(stateCode, stateName, district)
     const svg = select(svgRef.current);
 
     if (mapViz === MAP_VIZS.BUBBLES) {
@@ -524,11 +551,12 @@ function MapVisualizer({
         .selectAll('circle')
         .attr('fill-opacity', (d) => {
           const highlighted =
-            stateName === d.properties[CODE_2] &&
-            ((!district && stateCode !== mapCode) ||
-              district === d.properties[CODE_1] ||
-              mapView === MAP_VIEWS.STATES ||
-              (district === UNKNOWN_DISTRICT_KEY && !d.properties[CODE_1]));
+            stateName === TOPO2CITY_NAME[d.properties[CODE_2]]
+            // ((!district && stateCode !== mapCode) ||
+            //   district === d.properties[CODE_1] ||
+            //   mapView === MAP_VIEWS.COUNTRY ||
+            //   (district === UNKNOWN_DISTRICT_KEY && !d.properties[CODE_1]));
+          // console.log("highlighted: ", stateName, TOPO2CITY_NAME[d.properties[CODE_2]]  );
           return highlighted ? 1 : 0.25;
         });
     } else {
@@ -537,10 +565,11 @@ function MapVisualizer({
         .selectAll('path')
         .each(function (d) {
           const highlighted =
-            stateName === d.properties[CODE_2] &&
-            ((!district && stateCode !== mapCode) ||
-              district === d.properties[CODE_1] ||
-              mapView === MAP_VIEWS.STATES);
+            stateName === TOPO2CITY_NAME[d.properties[CODE_2]]
+            // stateName === d.properties[CODE_2] &&
+            // ((!district && stateCode !== mapCode) ||
+            //   district === d.properties[CODE_1] ||
+            //   mapView === MAP_VIEWS.COUNTRY);
           if (highlighted) this.parentNode.appendChild(this);
           select(this).attr('stroke-opacity', highlighted ? 1 : 0);
         });
@@ -576,10 +605,10 @@ function MapVisualizer({
             statistic
           ) && (
             <div className={classnames('disclaimer', `is-${statistic}`)}>
-              <AlertIcon />
+              {/* <AlertIcon />
               <span>
                 {t('District-wise data not available in state bulletin')}
-              </span>
+              </span> */}
             </div>
           )}
       </div>

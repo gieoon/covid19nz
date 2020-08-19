@@ -5,8 +5,8 @@ import {
 } from '../constants';
 import {
   getStatistic,
-  getIndiaYesterdayISO,
-  parseIndiaDate,
+  getNZYesterdayISO,
+  parseNZDate,
 } from '../utils/commonFunctions';
 
 import classnames from 'classnames';
@@ -29,14 +29,15 @@ function Minigraphs({timeseries, date: timelineDate}) {
   const refs = useRef([]);
 
   const dates = useMemo(() => {
-    const cutOffDateUpper = timelineDate || getIndiaYesterdayISO();
+    const cutOffDateUpper = timelineDate || getNZYesterdayISO();
+    console.log(cutOffDateUpper)
     const pastDates = Object.keys(timeseries || {}).filter(
       (date) => date <= cutOffDateUpper
     );
     const lastDate = pastDates[pastDates.length - 1];
 
     const cutOffDateLower = formatISO(
-      subDays(parseIndiaDate(lastDate), MINIGRAPH_LOOKBACK_DAYS),
+      subDays(parseNZDate(lastDate), MINIGRAPH_LOOKBACK_DAYS),
       {representation: 'date'}
     );
     return pastDates.filter((date) => date >= cutOffDateLower);
@@ -50,7 +51,7 @@ function Minigraphs({timeseries, date: timelineDate}) {
 
     const xScale = scaleTime()
       .clamp(true)
-      .domain(T ? [parseIndiaDate(dates[0]), parseIndiaDate(dates[T - 1])] : [])
+      .domain(T ? [parseNZDate(dates[0]), parseNZDate(dates[T - 1])] : [])
       .range([margin.left, chartRight]);
 
     refs.current.forEach((ref, index) => {
@@ -69,7 +70,7 @@ function Minigraphs({timeseries, date: timelineDate}) {
 
       const linePath = line()
         .curve(curveMonotoneX)
-        .x((date) => xScale(parseIndiaDate(date)))
+        .x((date) => xScale(parseNZDate(date)))
         .y((date) =>
           yScale(getStatistic(timeseries[date], 'delta', statistic))
         );
@@ -118,7 +119,7 @@ function Minigraphs({timeseries, date: timelineDate}) {
               .append('circle')
               .attr('fill', color)
               .attr('r', 2.5)
-              .attr('cx', (date) => xScale(parseIndiaDate(date)))
+              .attr('cx', (date) => xScale(parseNZDate(date)))
               .attr('cy', (date) =>
                 yScale(getStatistic(timeseries[date], 'delta', statistic))
               )
@@ -129,7 +130,7 @@ function Minigraphs({timeseries, date: timelineDate}) {
                   .delay(2100)
                   .duration(500)
                   .style('opacity', 1)
-                  .attr('cx', (date) => xScale(parseIndiaDate(date)))
+                  .attr('cx', (date) => xScale(parseNZDate(date)))
                   .attr('cy', (date) =>
                     yScale(getStatistic(timeseries[date], 'delta', statistic))
                   )
@@ -138,7 +139,7 @@ function Minigraphs({timeseries, date: timelineDate}) {
             update
               .transition()
               .duration(500)
-              .attr('cx', (date) => xScale(parseIndiaDate(date)))
+              .attr('cx', (date) => xScale(parseNZDate(date)))
               .attr('cy', (date) =>
                 yScale(getStatistic(timeseries[date], 'delta', statistic))
               )

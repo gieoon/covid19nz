@@ -78,19 +78,30 @@ function MapExplorer({
     return produce(hoveredData, (draft) => {
       draft.name =
         regionHighlighted.districtName ||
-        CITY_NAMES[TOPO2CITY_NAME[regionHighlighted.stateCode]];
+        CITY_NAMES[TOPO2CITY_NAME[regionHighlighted.stateCode]] || regionHighlighted.stateCode;
     });
   }, [data, regionHighlighted.stateCode, regionHighlighted.districtName]);
 
   const handleTabClick = useCallback(
     (option) => {
+      // Reset map strokes
+      
+
       switch (option) {
         case MAP_VIZS.CHOROPLETH:
           setMapViz(MAP_VIZS.CHOROPLETH);
+          // Trigger through CSS
+          Array.from(document.getElementsByClassName('region')).forEach(
+            el => el.style.opacity = 1
+          );
           return;
 
         case MAP_VIZS.BUBBLES:
           setMapViz(MAP_VIZS.BUBBLES);
+          // Trigger through CSS
+          Array.from(document.getElementsByClassName('region')).forEach(
+            el => el.style.opacity = 0
+          );
           return;
 
         default:
@@ -102,8 +113,8 @@ function MapExplorer({
 
   const handleDistrictClick = useCallback(() => {
     const newMapView =
-      mapView === MAP_VIEWS.DISTRICTS ? MAP_VIEWS.STATES : MAP_VIEWS.DISTRICTS;
-    if (newMapView === MAP_VIEWS.STATES) {
+      mapView === MAP_VIEWS.DISTRICTS ? MAP_VIEWS.COUNTRY : MAP_VIEWS.DISTRICTS;
+    if (newMapView === MAP_VIEWS.COUNTRY) {
       setRegionHighlighted({
         stateCode: regionHighlighted.stateCode,
         districtName: null,
@@ -256,7 +267,7 @@ function MapExplorer({
               {BubblesIcon}
             </div>
 
-            {mapMeta.mapType === MAP_TYPES.COUNTRY && (
+            {/* {mapMeta.mapType === MAP_TYPES.COUNTRY && (
               <React.Fragment>
                 <div className="divider" />
                 <div
@@ -269,7 +280,7 @@ function MapExplorer({
                   <OrganizationIcon />
                 </div>
               </React.Fragment>
-            )}
+            )} */}
 
             {mapMeta.mapType === MAP_TYPES.STATE && (
               <div

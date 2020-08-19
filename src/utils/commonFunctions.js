@@ -1,5 +1,5 @@
 import {
-  INDIA_ISO_SUFFIX,
+  NZ_ISO_SUFFIX,
   ISO_DATE_REGEX,
   LOCALE_SHORTHANDS,
   NAN_STATISTICS,
@@ -38,16 +38,16 @@ export const isDevelopmentOrTest = () => {
   return false;
 };
 
-export const getIndiaDate = () => {
-  return utcToZonedTime(new Date(), 'Asia/Kolkata');
+export const getNZDate = () => {
+  return utcToZonedTime(new Date(), 'Pacific/Auckland');
 };
 
-export const getIndiaDateISO = () => {
-  return formatISO(getIndiaDate(), {representation: 'date'});
+export const getNZDateISO = () => {
+  return formatISO(getNZDate(), {representation: 'date'});
 };
 
-export const getIndiaYesterdayISO = () => {
-  return formatISO(subDays(getIndiaDate(), 1), {representation: 'date'});
+export const getNZYesterdayISO = () => {
+  return formatISO(subDays(getNZDate(), 1), {representation: 'date'});
 };
 
 export const formatLastUpdated = (unformattedDate) => {
@@ -57,10 +57,10 @@ export const formatLastUpdated = (unformattedDate) => {
   });
 };
 
-export const parseIndiaDate = (isoDate) => {
-  if (!isoDate) return getIndiaDate();
-  if (isoDate.match(ISO_DATE_REGEX)) isoDate += INDIA_ISO_SUFFIX;
-  return utcToZonedTime(new Date(isoDate), 'Asia/Kolkata');
+export const parseNZDate = (isoDate) => {
+  if (!isoDate) return getNZDate();
+  if (isoDate.match(ISO_DATE_REGEX)) isoDate += NZ_ISO_SUFFIX;
+  return utcToZonedTime(new Date(isoDate), 'Pacific/Auckland');
 };
 
 export const formatDate = (unformattedDate, formatString) => {
@@ -69,8 +69,8 @@ export const formatDate = (unformattedDate, formatString) => {
     typeof unformattedDate === 'string' &&
     unformattedDate.match(ISO_DATE_REGEX)
   )
-    unformattedDate += INDIA_ISO_SUFFIX;
-  const date = utcToZonedTime(new Date(unformattedDate), 'Asia/Kolkata');
+    unformattedDate += NZ_ISO_SUFFIX;
+  const date = utcToZonedTime(new Date(unformattedDate), 'Pacific/Auckland');
   return format(date, formatString, {
     locale: locale,
   });
@@ -171,7 +171,7 @@ export const getTableStatistic = (
       STATISTIC_OPTIONS[statistic].normalizeByKey === 'tested') &&
     differenceInDays(
       lastUpdatedTT,
-      parseIndiaDate(data.meta?.tested?.['last_updated'])
+      parseNZDate(data.meta?.tested?.['last_updated'])
     ) > TESTED_LOOKBACK_DAYS;
 
   const total = !expired

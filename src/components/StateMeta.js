@@ -6,8 +6,8 @@ import {
   formatNumber,
   formatLastUpdated,
   getStatistic,
-  getIndiaYesterdayISO,
-  parseIndiaDate,
+  getNZYesterdayISO,
+  parseNZDate,
 } from '../utils/commonFunctions';
 
 import {differenceInDays} from 'date-fns';
@@ -16,7 +16,7 @@ import {Compass} from 'react-feather';
 
 function StateMeta({stateCode, data, timeseries}) {
   const pastDates = Object.keys(timeseries || {}).filter(
-    (date) => date <= getIndiaYesterdayISO()
+    (date) => date <= getNZYesterdayISO()
   );
   const lastDate = pastDates[pastDates.length - 1];
   const lastConfirmed = getStatistic(
@@ -28,7 +28,7 @@ function StateMeta({stateCode, data, timeseries}) {
     .reverse()
     .find(
       (date) =>
-        differenceInDays(parseIndiaDate(lastDate), parseIndiaDate(date)) >= 7
+        differenceInDays(parseNZDate(lastDate), parseNZDate(date)) >= 7
     );
   const prevWeekConfirmed = getStatistic(
     timeseries?.[prevWeekDate],
@@ -36,8 +36,8 @@ function StateMeta({stateCode, data, timeseries}) {
     'confirmed'
   );
   const diffDays = differenceInDays(
-    parseIndiaDate(lastDate),
-    parseIndiaDate(prevWeekDate)
+    parseNZDate(lastDate),
+    parseNZDate(prevWeekDate)
   );
 
   const confirmedPerMillion = getStatistic(

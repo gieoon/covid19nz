@@ -4428,3 +4428,7 @@ footer {
     transform: translateY(20px);
   }
 }
+
+.region {
+  transition: opacity 300ms linear!important;
+}

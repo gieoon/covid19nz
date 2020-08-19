@@ -9,7 +9,7 @@ import {
   formatNumber,
   formatDate,
   getStatistic,
-  parseIndiaDate,
+  parseNZDate,
 } from '../utils/commonFunctions';
 
 import classnames from 'classnames';
@@ -68,7 +68,7 @@ function Timeseries({timeseries, dates, chartType, isUniform, isLog}) {
 
     const xScale = scaleTime()
       .clamp(true)
-      .domain(T ? [parseIndiaDate(dates[0]), parseIndiaDate(dates[T - 1])] : [])
+      .domain(T ? [parseNZDate(dates[0]), parseNZDate(dates[T - 1])] : [])
       .range([margin.left, chartRight]);
 
     // Number of x-axis ticks
@@ -179,12 +179,12 @@ function Timeseries({timeseries, dates, chartType, isUniform, isLog}) {
       const xm = mouse(this)[0];
       const date = xScale.invert(xm);
       if (!isNaN(date)) {
-        const bisectDate = bisector((date) => parseIndiaDate(date)).left;
+        const bisectDate = bisector((date) => parseNZDate(date)).left;
         const index = bisectDate(dates, date, 1);
         const dateLeft = dates[index - 1];
         const dateRight = dates[index];
         setHighlightedDate(
-          date - parseIndiaDate(dateLeft) < parseIndiaDate(dateRight) - date
+          date - parseNZDate(dateLeft) < parseNZDate(dateRight) - date
             ? dateLeft
             : dateRight
         );
@@ -230,11 +230,11 @@ function Timeseries({timeseries, dates, chartType, isUniform, isLog}) {
             .attr('fill', color)
             .attr('stroke', color)
             .attr('cy', chartBottom)
-            .attr('cx', (date) => xScale(parseIndiaDate(date)))
+            .attr('cx', (date) => xScale(parseNZDate(date)))
             .attr('r', barWidth / 2)
         )
         .transition(t)
-        .attr('cx', (date) => xScale(parseIndiaDate(date)))
+        .attr('cx', (date) => xScale(parseNZDate(date)))
         .attr('cy', (date) =>
           yScale(getStatistic(timeseries[date], chartType, statistic))
         );
@@ -249,7 +249,7 @@ function Timeseries({timeseries, dates, chartType, isUniform, isLog}) {
 
         const linePath = line()
           .curve(curveMonotoneX)
-          .x((date) => xScale(parseIndiaDate(date)))
+          .x((date) => xScale(parseNZDate(date)))
           .y((date) =>
             yScale(getStatistic(timeseries[date], chartType, statistic))
           );
@@ -299,16 +299,16 @@ function Timeseries({timeseries, dates, chartType, isUniform, isLog}) {
               .append('line')
               .attr('class', 'stem')
               .attr('stroke-width', barWidth)
-              .attr('x1', (date) => xScale(parseIndiaDate(date)))
+              .attr('x1', (date) => xScale(parseNZDate(date)))
               .attr('y1', chartBottom)
-              .attr('x2', (date) => xScale(parseIndiaDate(date)))
+              .attr('x2', (date) => xScale(parseNZDate(date)))
               .attr('y2', chartBottom)
           )
           .transition(t)
           .attr('stroke-width', barWidth)
-          .attr('x1', (date) => xScale(parseIndiaDate(date)))
+          .attr('x1', (date) => xScale(parseNZDate(date)))
           .attr('y1', yScale(0))
-          .attr('x2', (date) => xScale(parseIndiaDate(date)))
+          .attr('x2', (date) => xScale(parseNZDate(date)))
           .attr('y2', (date) =>
             yScale(getStatistic(timeseries[date], chartType, statistic))
           );

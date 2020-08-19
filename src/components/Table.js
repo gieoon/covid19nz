@@ -11,7 +11,7 @@ import {
   TABLE_STATISTICS_EXPANDED,
   UNASSIGNED_STATE_CODE,
 } from '../constants';
-import {getTableStatistic, parseIndiaDate} from '../utils/commonFunctions';
+import {getTableStatistic, parseNZDate} from '../utils/commonFunctions';
 
 import {
   FilterIcon,
@@ -86,7 +86,7 @@ function Table({
       states['TT']?.meta?.tested?.['last_updated'],
     ];
     return max(
-      updatedDates.filter((date) => date).map((date) => parseIndiaDate(date))
+      updatedDates.filter((date) => date).map((date) => parseNZDate(date))
     );
   }, [states, timelineDate]);
 
@@ -163,7 +163,7 @@ function Table({
   return (
     <React.Fragment>
       <div className="table-top">
-        <animated.div
+        {/* <animated.div
           className={classnames('option-toggle', {
             'is-highlighted': tableOption === 'Districts',
           })}
@@ -171,7 +171,7 @@ function Table({
           style={trail[0]}
         >
           <OrganizationIcon size={14} />
-        </animated.div>
+        </animated.div> */}
 
         <animated.div
           className={classnames('million-toggle', {
@@ -209,16 +209,16 @@ function Table({
           <animated.div key={key} className="table-helper" style={props}>
             <div className="helper-top">
               <div className="helper-left">
-                <div className="info-item">
+                {/* <div className="info-item">
                   <span>
                     <OrganizationIcon size={14} />
                   </span>
                   <p>{`Toggle between States/Districts`}</p>
-                </div>
+                </div> */}
 
                 <div className="info-item">
-                  <h5>10L</h5>
-                  <p>Per Ten Lakh People</p>
+                  <h5>10K</h5>
+                  <p>Per Ten Thousand People</p>
                 </div>
 
                 <div className="info-item sort">
@@ -239,18 +239,18 @@ function Table({
                   <TableDeltaHelper />
                 </div>
 
-                <div className="info-item notes">
+                {/* <div className="info-item notes">
                   <span>
                     <InfoIcon size={15} />
                   </span>
                   <p>Notes</p>
-                </div>
+                </div> */}
               </div>
               <div className="helper-right">
                 <div className="info-item">
                   <p>Units</p>
                 </div>
-                {Object.entries({'1K': 3, '1L': 5, '1Cr': 7}).map(
+                {Object.entries({'1K': 3}).map(
                   ([abbr, exp]) => (
                     <div className="info-item" key={abbr}>
                       <h5>{abbr}</h5>
@@ -273,8 +273,12 @@ function Table({
             </div>
 
             <h5 className="text">
-              {t('Compiled from State Govt. numbers')},{' '}
+              {t('Compiled from the NZ Ministry Of Health. figures')},{' '}
               <Link to="/about">{t('know more')}!</Link>
+              <br/>
+              <br/>
+              <span>New Zealand's COVID19 data is collected per DHB (District Health Board) rather than direct regional district boundaries. </span>
+              <a target="_blank" href="https://www.health.govt.nz/our-work/diseases-and-conditions/covid-19-novel-coronavirus/covid-19-current-situation/covid-19-current-cases">Source</a>
             </h5>
           </animated.div>
         ) : null
@@ -292,7 +296,7 @@ function Table({
               className="cell heading"
               onClick={handleSortClick.bind(this, 'regionName')}
             >
-              <div>{t(tableOption === 'States' ? 'State/UT' : 'District')}</div>
+              <div>{t(tableOption === 'States' ? 'District Health Board' : 'States/UT')}</div>
               {sortData.sortColumn === 'regionName' && (
                 <div
                   className={classnames('sort-icon', {

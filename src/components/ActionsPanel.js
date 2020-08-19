@@ -81,9 +81,10 @@ const ActionsPanel = ({
     return styles;
   }, []);
 
+  console.log(lastViewedLog)
   const getTimeFromMilliseconds = (lastViewedLog) => {
     return format(
-      utcToZonedTime(parse(lastViewedLog, 'T', new Date()), 'Asia/Kolkata'),
+      utcToZonedTime(parse(lastViewedLog, 'T', new Date()), "Pacific/Auckland"),
       'dd MMM, p'
     );
   };
@@ -105,7 +106,7 @@ const ActionsPanel = ({
       >
         <h5 className="fadeInUp" style={trail[0]}>{`${getTimeFromMilliseconds(
           lastViewedLog
-        )} IST`}</h5>
+        )} NZST`}</h5>
 
         <div className="bell-icon fadeInUp" style={trail[1]}>
           {!showUpdates ? Bell : BellOff}

@@ -6,7 +6,7 @@ import {
   CITY_NAMES,
 } from '../constants';
 import useIsVisible from '../hooks/useIsVisible';
-import {getIndiaYesterdayISO, parseIndiaDate} from '../utils/commonFunctions';
+import {getNZYesterdayISO, parseNZDate} from '../utils/commonFunctions';
 
 import {IssueOpenedIcon, PinIcon, ReplyIcon} from '@primer/octicons-v2-react';
 import classnames from 'classnames';
@@ -123,7 +123,7 @@ function TimeseriesExplorer({
   }, [regionHighlighted.stateCode, regionHighlighted.districtName, regions]);
 
   const dates = useMemo(() => {
-    const cutOffDateUpper = timelineDate || getIndiaYesterdayISO();
+    const cutOffDateUpper = timelineDate || getNZYesterdayISO();
     const pastDates = Object.keys(selectedTimeseries || {}).filter(
       (date) => date <= cutOffDateUpper
     );
@@ -135,11 +135,11 @@ function TimeseriesExplorer({
 
     let cutOffDateLower;
     if (lookback === TIMESERIES_LOOKBACKS.MONTH) {
-      cutOffDateLower = formatISO(sub(parseIndiaDate(lastDate), {months: 1}), {
+      cutOffDateLower = formatISO(sub(parseNZDate(lastDate), {months: 1}), {
         representation: 'date',
       });
     } else if (lookback === TIMESERIES_LOOKBACKS.THREE_MONTHS) {
-      cutOffDateLower = formatISO(sub(parseIndiaDate(lastDate), {months: 3}), {
+      cutOffDateLower = formatISO(sub(parseNZDate(lastDate), {months: 3}), {
         representation: 'date',
       });
     }

@@ -107,7 +107,14 @@ function MapLegend({data, mapViz, mapScale, statistic}) {
   return (
     <div
       className="svg-parent maplegend"
-      style={{height: MAP_LEGEND_HEIGHT}}
+      style={{
+        height: MAP_LEGEND_HEIGHT, 
+        // position: "absolute", 
+        //width: "50px", 
+        // right: "64px", 
+        // bottom: "0px"
+        marginTop: "48px",
+      }}
       ref={wrapperRef}
     >
       <svg id="legend" preserveAspectRatio="xMidYMid meet" ref={svgRef}>

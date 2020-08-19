@@ -152,7 +152,7 @@ export const UNKNOWN_DISTRICT_KEY = 'Unknown';
 
 export const ISO_DATE_REGEX = /^\d{4}-([0]\d|1[0-2])-([0-2]\d|3[01])$/g;
 
-export const INDIA_ISO_SUFFIX = 'T00:00:00+05:30';
+export const NZ_ISO_SUFFIX = 'T00:00:00+12:00';
 
 export const SPRING_CONFIG_NUMBERS = {clamp: true, precision: 1};
 
@@ -173,7 +173,7 @@ export const MAP_VIZS = {
 };
 
 export const MAP_VIEWS = {
-  STATES: 0,
+  COUNTRY: 0,
   DISTRICTS: 1,
 };
 
