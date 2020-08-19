@@ -4,6 +4,7 @@ import {
   TIMESERIES_CHART_TYPES,
   TIMESERIES_LOOKBACKS,
   CITY_NAMES,
+  TOPO2CITY_NAME,
 } from '../constants';
 import useIsVisible from '../hooks/useIsVisible';
 import {getNZYesterdayISO, parseNZDate} from '../utils/commonFunctions';
@@ -31,7 +32,7 @@ function TimeseriesExplorer({
   const {t} = useTranslation();
   const [lookback, setLookback] = useSessionStorage(
     'timeseriesLookback',
-    TIMESERIES_LOOKBACKS.MONTH
+    TIMESERIES_LOOKBACKS.BEGINNING
   );
   const [chartType, setChartType] = useLocalStorage('chartType', 'total');
   const [isUniform, setIsUniform] = useLocalStorage('isUniform', true);
@@ -244,14 +245,16 @@ function TimeseriesExplorer({
                     CITY_NAMES[region.stateCode] !== region.districtName
                 )
                 .map((region) => {
+                  // console.log(region)
                   return (
                     <option
                       value={JSON.stringify(region)}
                       key={`${region.stateCode}-${region.districtName}`}
                     >
-                      {region.districtName
-                        ? t(region.districtName)
-                        : t(CITY_NAMES[region.stateCode])}
+                      {region.stateCode === 'TT'
+                        ? t(CITY_NAMES[TOPO2CITY_NAME[region.stateCode]])
+                        : t(region.stateCode)
+                      }  
                     </option>
                   );
                 })}

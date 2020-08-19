@@ -180,7 +180,7 @@ function Table({
           onClick={setIsPerMillion.bind(this, !isPerMillion)}
           style={trail[0]}
         >
-          <span>10L</span>
+          <span>10K</span>
         </animated.div>
 
         <animated.div

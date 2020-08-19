@@ -218,6 +218,13 @@ export const MAP_META = {
   // },
 };
 
+// Language name to flag image file name
+export const LANGUAGE_IMGS = {
+  "english": "newzealand.jpg",
+  "japanese": "japan.svg",
+  "chinese": "china.jpg",
+}
+
 export const MAP_LEGEND_HEIGHT = 50;
 
 export const CITY_NAMES = {

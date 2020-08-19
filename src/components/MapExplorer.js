@@ -85,8 +85,6 @@ function MapExplorer({
   const handleTabClick = useCallback(
     (option) => {
       // Reset map strokes
-      
-
       switch (option) {
         case MAP_VIZS.CHOROPLETH:
           setMapViz(MAP_VIZS.CHOROPLETH);

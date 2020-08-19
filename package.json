@@ -31,7 +31,6 @@
     "immer": "^7.0.5",
     "lodash": "^4.17.15",
     "react": "^16.13.1",
-    "react-adsense": "^0.1.0",
     "react-content-loader": "^5.1.0",
     "react-dom": "^16.13.1",
     "react-feather": "^2.0.8",

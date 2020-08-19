@@ -21,7 +21,7 @@ const Level = lazy(() => import('./Level'));
 const MapSwitcher = lazy(() => import('./MapSwitcher'));
 const StateHeader = lazy(() => import('./StateHeader'));
 
-const Ad = lazy(() => import ('./Ad'));
+const GoogleAd = lazy(() => import ('./GoogleAd'));
 
 function Home() {
   const [regionHighlighted, setRegionHighlighted] = useState({
@@ -78,7 +78,7 @@ function Home() {
 
       <div className="Home">
         {/* nz.covid19live.com_ad1 */}
-        <Ad client="ca-pub-9859357986849249" slot="3842985080" />
+        <GoogleAd client="ca-pub-9859357986849249" slot="3842985080" />
 
         <div className={classnames('home-left', {expanded: expandTable})}>
           <div className="header">
@@ -179,7 +179,7 @@ function Home() {
       </div>
 
       {/* nz.covid19live.com_ad2 */}
-      <Ad client="ca-pub-9859357986849249" slot="2856565840" />
+      <GoogleAd client="ca-pub-9859357986849249" slot="2856565840" />
 
       {isVisible && (
         <Suspense fallback={<div />}>

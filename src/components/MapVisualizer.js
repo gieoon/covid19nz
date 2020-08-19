@@ -387,7 +387,7 @@ function MapVisualizer({
           const stateCode = CITY_CODES[TOPO2CITY_NAME[feature.properties[CODE_2]]];
           // const districtName = feature.properties[CODE_1];
           const stateData = data[stateCode];
-
+          // console.log(stateData, mapView === MAP_VIEWS.COUNTRY)
           if (mapView === MAP_VIEWS.COUNTRY) {
             feature.value = getTotalStatistic(stateData, statistic);
           } else if (mapView === MAP_VIEWS.DISTRICTS) {
@@ -406,6 +406,8 @@ function MapVisualizer({
           return feature;
         })
         .sort((featureA, featureB) => featureB.value - featureB.value);
+
+        // console.log(circlesData)
     }
 
     svg
@@ -456,6 +458,8 @@ function MapVisualizer({
       .attr('fill', STATISTIC_CONFIGS[statistic].color + '70')
       .attr('stroke', STATISTIC_CONFIGS[statistic].color + '70')
       .attr('r', (feature) => {
+        // console.log(feature.value);
+        // console.log(mapScale(feature.value))
         return mapScale(feature.value);
       });
   }, [

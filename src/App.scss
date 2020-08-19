@@ -2248,7 +2248,7 @@ abbr {
       }
 
       .switch-type,
-      .switch-statistic, {
+      .switch-statistic {
         display: flex;
         flex-direction: row;
         justify-content: flex-end;
@@ -3583,6 +3583,7 @@ footer {
       justify-content: center;
       padding: 1rem;
       user-select: none;
+      text-align: center;
 
       &:hover {
         color: $pblue;
@@ -3591,6 +3592,16 @@ footer {
       &.is-highlighted {
         background: $pblue-light;
         color: $pblue;
+      }
+
+      .language-img {
+        width: 64px;
+        height: 42.63px;
+        opacity: .75;
+        // object-fit: contain;
+        margin-bottom: 70%;
+        border-radius: 6px;
+
       }
     }
   }
@@ -3641,6 +3652,7 @@ footer {
     min-width: 5rem;
     position: fixed;
     z-index: 999;
+    top: 0;
 
     .navbar-left {
       margin-bottom: .5rem;
@@ -3762,10 +3774,11 @@ footer {
   .table-top,
   .LanguageSwitcher {
     width: calc(100% - 2rem);
+
   }
 
   .Home,
-  .State, {
+  .State {
     display: flex;
     flex-direction: column;
     margin-left: 0;

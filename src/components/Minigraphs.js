@@ -30,7 +30,7 @@ function Minigraphs({timeseries, date: timelineDate}) {
 
   const dates = useMemo(() => {
     const cutOffDateUpper = timelineDate || getNZYesterdayISO();
-    console.log(cutOffDateUpper)
+    // console.log(cutOffDateUpper)
     const pastDates = Object.keys(timeseries || {}).filter(
       (date) => date <= cutOffDateUpper
     );

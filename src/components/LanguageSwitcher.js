@@ -1,5 +1,6 @@
 import {ENTER_IN, ENTER_OUT} from '../animations';
 import locales from '../i18n/locales.json';
+import {LANGUAGE_IMGS} from '../constants';
 
 import classnames from 'classnames';
 import React, {useRef, useCallback} from 'react';
@@ -45,7 +46,7 @@ function LanguageSwitcher({showLanguageSwitcher, setShowLanguageSwitcher}) {
         style={props}
         ref={languageSwitcherRef}
       >
-        <h3>We speak the following languages</h3>
+        <h3>Select a language you're most comfortable with.</h3>
 
         <div className="languages">
           {Object.keys(locales).map((languageKey) => (
@@ -56,7 +57,8 @@ function LanguageSwitcher({showLanguageSwitcher, setShowLanguageSwitcher}) {
               })}
               onClick={switchLanguage.bind(this, languageKey)}
             >
-              <span>{locales[languageKey]}</span>
+              <img src={`./flags/${LANGUAGE_IMGS[languageKey]}`} alt="" className="language-img" />
+              <span style={{height:"24px"}}>{locales[languageKey]}</span>
             </div>
           ))}
         </div>

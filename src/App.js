@@ -1,6 +1,7 @@
 import './App.scss';
 import Blog from './components/Blog';
-import Navbar from './components/Navbar';
+// import Navbar from './components/Navbar';
+import MiniNavbar from './components/MiniNavbar';
 
 import React, {lazy, useState, Suspense, useEffect} from 'react';
 import {Route, Redirect, Switch, useLocation} from 'react-router-dom';
@@ -12,7 +13,7 @@ const State = lazy(() => import('./components/State'));
 const LanguageSwitcher = lazy(() => import('./components/LanguageSwitcher'));
 
 const App = () => {
-  const darkMode = useDarkMode(false);
+  const darkMode = useDarkMode(true); // Default to true
   const [showLanguageSwitcher, setShowLanguageSwitcher] = useState(false);
   const location = useLocation();
 
@@ -60,9 +61,13 @@ const App = () => {
         />
       </Suspense>
 
-      <Navbar
+      {/* <Navbar
         pages={pages}
         {...{darkMode}}
+        {...{showLanguageSwitcher, setShowLanguageSwitcher}}
+      /> */}
+
+      <MiniNavbar 
         {...{showLanguageSwitcher, setShowLanguageSwitcher}}
       />
 
