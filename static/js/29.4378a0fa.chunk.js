@@ -1,0 +1,2 @@
+(this.webpackJsonpcovid19india=this.webpackJsonpcovid19india||[]).push([[29],{221:function(t,a,e){"use strict";e.r(a),e.d(a,"default",(function(){return o}));var i=e(0),n=e.n(i);function o(t){var a=t.client,e=t.slot;return Object(i.useEffect)((function(){(window.adsbygoogle=window.adsbygoogle||[]).push({})}),[]),n.a.createElement("div",{key:e,style:{}},n.a.createElement("ins",{className:"adsbygoogle",style:{display:"inline-block",width:"728px",height:"90px"},"data-ad-client":a,"data-ad-slot":e,"data-ad-format":"auto"}))}}}]);
+//# sourceMappingURL=29.4378a0fa.chunk.js.map
