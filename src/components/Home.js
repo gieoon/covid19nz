@@ -9,6 +9,7 @@ import {Helmet} from 'react-helmet';
 import {useLocation} from 'react-router-dom';
 import {useLocalStorage, useSessionStorage, useWindowSize} from 'react-use';
 
+
 const TimeseriesExplorer = lazy(() => import('./TimeseriesExplorer'));
 const MapExplorer = lazy(() => import('./MapExplorer'));
 const Actions = lazy(() => import('./Actions'));
@@ -19,6 +20,8 @@ const Search = lazy(() => import('./Search'));
 const Level = lazy(() => import('./Level'));
 const MapSwitcher = lazy(() => import('./MapSwitcher'));
 const StateHeader = lazy(() => import('./StateHeader'));
+
+const Ad = lazy(() => import ('./Ad'));
 
 function Home() {
   const [regionHighlighted, setRegionHighlighted] = useState({
@@ -74,6 +77,9 @@ function Home() {
       </Helmet>
 
       <div className="Home">
+        {/* nz.covid19live.com_ad1 */}
+        <Ad client="ca-pub-9859357986849249" slot="3842985080" />
+
         <div className={classnames('home-left', {expanded: expandTable})}>
           <div className="header">
             <Suspense fallback={<div />}>
@@ -171,6 +177,9 @@ function Home() {
           )}
         </div>
       </div>
+
+      {/* nz.covid19live.com_ad2 */}
+      <Ad client="ca-pub-9859357986849249" slot="2856565840" />
 
       {isVisible && (
         <Suspense fallback={<div />}>
