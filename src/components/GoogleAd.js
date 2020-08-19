@@ -22,6 +22,7 @@ export default function GoogleAd({
             // width: "728"
             textAlign: "center",
             marginTop: "64px",
+            marginBottom: "64px",
         }}>
             <ins className="adsbygoogle"
                 style={{display:"inline-block",width:"728px",height:"90px"}}

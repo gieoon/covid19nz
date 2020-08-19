@@ -144,6 +144,7 @@ h6 {
   flex-direction: row;
   height: 4rem;
   justify-content: space-between;
+  padding-right: 1.5rem;
 
   a {
     color: inherit;
@@ -3645,11 +3646,13 @@ footer {
   }
 
   .Navbar {
-    background: $gray-light-opaque;
+    // background: $gray-light-opaque;
+    background: #161625!important;
     flex-direction: column;
     height: 100%;
     justify-content: flex-start;
-    min-width: 5rem;
+    min-width: 4.5rem;
+    width: 4.5rem;
     position: fixed;
     z-index: 999;
     top: 0;
@@ -3673,7 +3676,8 @@ footer {
 
     .navbar-right {
       align-items: center;
-      background: $gray-light-opaque;
+      // background: $gray-light-opaque;
+      // background: #161625;
       display: flex;
       flex-direction: column;
       order: 2;
@@ -3717,7 +3721,8 @@ footer {
     .Navbar,
     .expand,
     .navbar-right {
-      background: #1e1e30 !important;
+      // background: #161625 !important;
+      background: transparent!important;
     }
   }
 
