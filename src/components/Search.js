@@ -60,6 +60,7 @@ function Search() {
           ),
           indexRemote: true,
           remote: {
+            //TODO
             url: 'https://api.covid19india.org/state_district_wise.json',
             transform: function (response) {
               const districts = [];

@@ -1,4 +1,5 @@
 import {isDevelopmentOrTest} from '../utils/commonFunctions';
+import {API_BARE_URL} from '../constants';
 
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
@@ -18,7 +19,7 @@ i18n
     fallbackLng: 'english',
     load: 'languageOnly',
     backend: {
-      loadPath: 'https://api.covid19india.org/locales/locale_{{lng}}.json',
+      loadPath: API_BARE_URL + '/locales/locale_{{lng}}.json',
       addPath: 'http://localhost:9999/',
     },
     saveMissing: isDevelopmentOrTest() && DEBUG,

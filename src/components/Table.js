@@ -180,7 +180,7 @@ function Table({
           onClick={setIsPerMillion.bind(this, !isPerMillion)}
           style={trail[0]}
         >
-          <span>10K</span>
+          <span>{t('10K')}</span>
         </animated.div>
 
         <animated.div
@@ -217,22 +217,22 @@ function Table({
                 </div> */}
 
                 <div className="info-item">
-                  <h5>10K</h5>
-                  <p>Per Ten Thousand People</p>
+                  <h5>{t('10K')}</h5>
+                  <p>{t('Per Ten Thousand People')}</p>
                 </div>
 
                 <div className="info-item sort">
                   <span>
                     <FilterIcon size={14} />
                   </span>
-                  <p>Sort by Descending</p>
+                  <p>{t('Sort by Descending')}</p>
                 </div>
 
                 <div className="info-item sort invert">
                   <span>
                     <FilterIcon size={14} />
                   </span>
-                  <p>Sort by Ascending</p>
+                  <p>{t('Sort by Ascending')}</p>
                 </div>
 
                 <div className="info-item sort">
@@ -248,7 +248,7 @@ function Table({
               </div>
               <div className="helper-right">
                 <div className="info-item">
-                  <p>Units</p>
+                  <p>{t('Units')}</p>
                 </div>
                 {Object.entries({'1K': 3}).map(
                   ([abbr, exp]) => (
@@ -274,11 +274,12 @@ function Table({
 
             <h5 className="text">
               {t('Compiled from the NZ Ministry Of Health. figures')},{' '}
-              <Link to="/about">{t('know more')}!</Link>
+              {/* <Link to="/about">{t('know more')}!</Link> */}
+              <a href="https://www.stats.govt.nz/experimental/covid-19-data-portal" target="_blank" rel="noopener noreferrer">{t('know more')}</a>
               <br/>
               <br/>
-              <span>New Zealand's COVID19 data is collected per DHB (District Health Board) rather than direct regional district boundaries. </span>
-              <a target="_blank" href="https://www.health.govt.nz/our-work/diseases-and-conditions/covid-19-novel-coronavirus/covid-19-current-situation/covid-19-current-cases">Source</a>
+              <span>{t("New Zealand's COVID19 data is collected per DHB (District Health Board) rather than direct regional district boundaries.")}</span>
+              <a target="_blank" href="https://www.health.govt.nz/our-work/diseases-and-conditions/covid-19-novel-coronavirus/covid-19-current-situation/covid-19-current-cases" rel="noopener noreferrer">{t('Source')}</a>
             </h5>
           </animated.div>
         ) : null

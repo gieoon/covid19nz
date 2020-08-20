@@ -142,12 +142,12 @@ function Row({
     )}]`;
   }
 
-  const handleStatePageClick = useCallback(
-    (stateCode) => {
-      history.push(`state/${stateCode}`);
-    },
-    [history]
-  );
+  // const handleStatePageClick = useCallback(
+  //   (stateCode) => {
+  //     history.push(`state/${stateCode}`);
+  //   },
+  //   [history]
+  // );
 
   const handleCollapse = useCallback(() => {
     setShowDistricts(false);
@@ -183,7 +183,7 @@ function Row({
       >
         <div className="cell">
           <div className="state-name fadeInUp">
-            {t(CITY_NAMES[TOPO2CITY_NAME[stateCode]]) || CITY_NAMES[stateCode] || districtNameStr}
+            {t(CITY_NAMES[TOPO2CITY_NAME[stateCode]]) || t(CITY_NAMES[stateCode]) || t(districtNameStr)}
           </div>
           {data?.meta?.notes && (
             <Tooltip {...{data: data.meta.notes}}>
@@ -214,7 +214,7 @@ function Row({
               )}
               <div
                 className="state-page"
-                onClick={handleStatePageClick.bind(this, stateCode)}
+                // onClick={handleStatePageClick.bind(this, stateCode)}
               >
                 <GraphIcon />
                 <span>
@@ -225,7 +225,7 @@ function Row({
               </div>
             </div>
 
-            {UNKNOWN_DISTRICT_KEY in data.districts && (
+            {/* {UNKNOWN_DISTRICT_KEY in data.districts && (
               <div className="state-meta-bottom">
                 <div className={classnames('disclaimer')}>
                   <AlertIcon />
@@ -234,7 +234,7 @@ function Row({
                   </span>
                 </div>
               </div>
-            )}
+            )} */}
           </div>
 
           <div className={classnames('row', 'heading')}>

@@ -33,7 +33,7 @@ function Home() {
   const [expandTable, setExpandTable] = useLocalStorage('expandTable', false);
   const [mapStatistic, setMapStatistic] = useSessionStorage(
     'mapStatistic',
-    'active'
+    'confirmed'
   );
   const [date, setDate] = useState('');
   // const [date, setDate] = useState('2020-07-21');

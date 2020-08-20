@@ -9,7 +9,7 @@ function Footer() {
     <footer>
       <div className="link">
         <a
-          href="https://github.com/covid19india"
+          href="https://nz.covid19live.com"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -17,9 +17,9 @@ function Footer() {
         </a>
       </div>
 
-      <h5>{t("Keeping Kiwi's updated through these difficult times")} 
+      <h5>{t("Keeping Kiwi's updated through these challenging times")} 
         <br/><br/>
-        <span>This website was built based on </span>
+        <span>{t('This website was built based on ')}</span>
         <a target='_blank' href='https://github.com/covid19india/covid19india-react' rel="noopener noreferrer">covid19india.org</a>
       </h5>
 
@@ -50,16 +50,16 @@ function Footer() {
           rel="noopener noreferrer"
         >
           <Send />
-        </a>
+        </a> */}
 
         <a
-          href="https://twitter.com/covid19indiaorg"
+          href="https://twitter.com/nzcovid19live"
           target="_blank"
           rel="noopener noreferrer"
           className="twitter"
         >
           <Twitter />
-        </a> */}
+        </a>
 
         <a
           href="mailto:jun.a.kagaya@gmail.com"

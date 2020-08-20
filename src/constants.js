@@ -3,6 +3,8 @@ export const API_ROOT_URL =
   // 'http://api.covid19live.com/data/processed';
   'https://gieoon.github.io/api.covid19nz/data/processed';
 
+export const API_BARE_URL = 'https://gieoon.github.io/api.covid19nz/';
+
 export const LOCALE_SHORTHANDS = {
   english: 'en-US',
   hindi: 'hi',
@@ -43,11 +45,11 @@ export const STATISTIC_DEFINITIONS = {
     format: 'int',
     options: {key: 'deceased'},
   },
-  other: {
-    displayName: 'other',
-    format: 'int',
-    options: {key: 'other'},
-  },
+  // other: {
+  //   displayName: 'other',
+  //   format: 'int',
+  //   options: {key: 'other'},
+  // },
   tested: {
     displayName: 'tested',
     color: '#4b1eaa',

@@ -4,7 +4,11 @@ import {FilterIcon} from '@primer/octicons-v2-react';
 import classnames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
+import {useTranslation} from 'react-i18next';
+
 const TableDeltaHelper = () => {
+  const {t} = useTranslation();
+  
   const [statisticIndex, setStatisticIndex] = useState(0);
 
   useEffect(() => {
@@ -23,7 +27,7 @@ const TableDeltaHelper = () => {
       <span className={classnames(`is-${TABLE_STATISTICS[statisticIndex]}`)}>
         <FilterIcon size={14} />
       </span>
-      <p>Sort by Delta [long press]</p>
+      <p>{t('Sort by Delta [long press]')}</p>
     </React.Fragment>
   );
 };
