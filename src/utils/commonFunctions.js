@@ -47,6 +47,7 @@ export const getNZDateISO = () => {
 };
 
 export const getNZYesterdayISO = () => {
+  console.log(formatISO(subDays(getNZDate(), 1), {representation: 'date'}))
   return formatISO(subDays(getNZDate(), 1), {representation: 'date'});
 };
 

@@ -16,8 +16,8 @@ const Actions = ({setDate, dates}) => {
   const [isTimelineMode, setIsTimelineMode] = useState(false);
 
   const {data: updates} = useSWR(
-    API_BARE_URL + '/data/updates.json',
-    //'https://api.covid19india.org/updatelog/log.json',
+    `${API_BARE_URL}data/updates.json`,
+    // 'https://api.covid19india.org/updatelog/log.json',
     fetcher,
     {
       revalidateOnFocus: true,
@@ -25,15 +25,20 @@ const Actions = ({setDate, dates}) => {
   );
 
   useEffect(() => {
+    // console.log(updates)
     if (updates !== undefined) {
-      const lastTimestamp = updates.slice().reverse()[0].timestamp * 1000;
+      // const lastTimestamp = updates.slice().reverse()[0].timestamp * 1000;
+      const lastTimestamp = updates.slice().reverse()[0].date;
+      // console.log(lastTimestamp)
       if (lastTimestamp !== lastViewedLog) {
         setNewUpdate(true);
         setLastViewedLog(lastTimestamp);
       }
     }
   }, [lastViewedLog, updates, setLastViewedLog, setNewUpdate]);
-
+  
+  // console.log(updates, lastViewedLog)
+  if(!lastViewedLog) return <></>
   return (
     <React.Fragment>
       <ActionsPanel

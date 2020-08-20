@@ -82,10 +82,14 @@ const ActionsPanel = ({
   }, []);
 
   const getTimeFromMilliseconds = (lastViewedLog) => {
+    // console.log(lastViewedLog)
     return format(
-      utcToZonedTime(parse(lastViewedLog, 'T', new Date()), "Pacific/Auckland"),
-      'dd MMM, p'
-    );
+      utcToZonedTime(new Date(lastViewedLog), "Pacific/Auckland"), 
+    'dd MMM, p')
+    // return format(
+    //   utcToZonedTime(parse(lastViewedLog, 'T', new Date()), "Pacific/Auckland"),
+    //   'dd MMM, p'
+    // );
   };
 
   const handleClick = useCallback(() => {

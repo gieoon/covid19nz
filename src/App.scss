@@ -1179,6 +1179,7 @@ h6 {
   flex-direction: column;
   max-width: 40rem;
   width: 100%;
+  position: relative;
 
   & > * {
     align-self: center;
@@ -1196,7 +1197,8 @@ h6 {
       justify-content: space-around;
       padding: 1rem;
       position: absolute;
-      top: 13.25rem;
+      // top: 13.25rem;
+      top: 8.5rem;
 
       .highlight {
         color: $brown !important;

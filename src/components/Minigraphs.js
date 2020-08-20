@@ -35,11 +35,13 @@ function Minigraphs({timeseries, date: timelineDate}) {
       (date) => date <= cutOffDateUpper
     );
     const lastDate = pastDates[pastDates.length - 1];
+    console.log(lastDate, pastDates)
 
     const cutOffDateLower = formatISO(
       subDays(parseNZDate(lastDate), MINIGRAPH_LOOKBACK_DAYS),
       {representation: 'date'}
     );
+
     return pastDates.filter((date) => date >= cutOffDateLower);
   }, [timeseries, timelineDate]);
 

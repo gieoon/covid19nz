@@ -11,6 +11,7 @@ function Updates({updates}) {
   useLayoutEffect(() => {
     currentDate = newDate;
   });
+  // console.log(currentDate)
 
   return (
     <div className="updates">
@@ -19,11 +20,12 @@ function Updates({updates}) {
       </div>
 
       {updates
-        .slice(-UPDATES_COUNT)
+        // .slice(-UPDATES_COUNT)
         .reverse()
         .map(function (activity, index) {
           activity.update = activity.update.replace(/\n/g, '<br/>');
-          const activityDate = new Date(activity.timestamp * 1000);
+          // const activityDate = new Date(activity.timestamp * 1000);
+          const activityDate = new Date(activity.date);
           const addHeader = () => {
             currentDate = activityDate;
 
