@@ -3,7 +3,6 @@ import {capitalize} from '../utils/commonFunctions';
 
 import {formatDistance, format} from 'date-fns';
 import React, {useLayoutEffect} from 'react';
-import {Send} from 'react-feather';
 
 const newDate = new Date();
 let currentDate = newDate;
@@ -53,21 +52,23 @@ function Updates({updates}) {
                 <h5>
                   {capitalize(
                     formatDistance(
-                      new Date(activity.timestamp * 1000),
+                      // new Date(activity.timestamp * 1000),
+                      new Date(activity.date),
                       new Date()
                     )
                   ) + ' ago'}
                 </h5>
-                <h4
+                <a href={activity.source} target="_blank" rel="noopener noreferrer">
+                  <h4
                   dangerouslySetInnerHTML={{
                     __html: activity.update,
-                  }}
-                ></h4>
+                  }}></h4>
+                </a>
               </div>
             </React.Fragment>
           );
         })}
-      <div className="updates-footer">
+      {/* <div className="updates-footer">
         <a
           href="https://t.me/covid19indiaorg_updates"
           target="_blank"
@@ -79,7 +80,7 @@ function Updates({updates}) {
             Join Instant Updates channel
           </h4>
         </a>
-      </div>
+      </div> */}
     </div>
   );
 }

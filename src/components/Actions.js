@@ -1,4 +1,5 @@
 import ActionsPanel from './ActionsPanel';
+import {API_BARE_URL} from '../constants';
 
 import {fetcher} from '../utils/commonFunctions';
 
@@ -15,7 +16,8 @@ const Actions = ({setDate, dates}) => {
   const [isTimelineMode, setIsTimelineMode] = useState(false);
 
   const {data: updates} = useSWR(
-    'https://api.covid19india.org/updatelog/log.json',
+    API_BARE_URL + '/data/updates.json',
+    //'https://api.covid19india.org/updatelog/log.json',
     fetcher,
     {
       revalidateOnFocus: true,

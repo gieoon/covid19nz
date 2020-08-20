@@ -35,6 +35,8 @@ function Search() {
   const [engine, setEngine] = useState(null);
   const [districtEngine, setDistrictEngine] = useState(null);
 
+  // Error with changing language causing search needing a reset.
+
   useUpdateEffect(() => {
     import('corejs-typeahead').then((Bloodhound) => {
       setEngine(
@@ -49,42 +51,42 @@ function Search() {
         })
       );
 
-      setDistrictEngine(
-        // eslint-disable-next-line
-        new Bloodhound.default({
-          initialize: true,
-          limit: 5,
-          queryTokenizer: Bloodhound.default.tokenizers.whitespace,
-          datumTokenizer: Bloodhound.default.tokenizers.obj.whitespace(
-            'district'
-          ),
-          indexRemote: true,
-          remote: {
-            //TODO
-            url: 'https://api.covid19india.org/state_district_wise.json',
-            transform: function (response) {
-              const districts = [];
-              Object.keys(response)
-                .filter((stateName) => stateName !== 'State Unassigned')
-                .map((stateName) => {
-                  const districtData = response[stateName].districtData;
-                  Object.keys(districtData)
-                    .filter(
-                      (districtName) => districtName !== UNKNOWN_DISTRICT_KEY
-                    )
-                    .map((districtName) => {
-                      return districts.push({
-                        district: districtName,
-                        state: stateName,
-                      });
-                    });
-                  return null;
-                });
-              return districts;
-            },
-          },
-        })
-      );
+      // setDistrictEngine(
+      //   // eslint-disable-next-line
+      //   new Bloodhound.default({
+      //     initialize: true,
+      //     limit: 5,
+      //     queryTokenizer: Bloodhound.default.tokenizers.whitespace,
+      //     datumTokenizer: Bloodhound.default.tokenizers.obj.whitespace(
+      //       'district'
+      //     ),
+      //     indexRemote: true,
+      //     remote: {
+      //       //TODO
+      //       url: 'https://api.covid19india.org/state_district_wise.json',
+      //       transform: function (response) {
+      //         const districts = [];
+      //         Object.keys(response)
+      //           .filter((stateName) => stateName !== 'State Unassigned')
+      //           .map((stateName) => {
+      //             const districtData = response[stateName].districtData;
+      //             Object.keys(districtData)
+      //               .filter(
+      //                 (districtName) => districtName !== UNKNOWN_DISTRICT_KEY
+      //               )
+      //               .map((districtName) => {
+      //                 return districts.push({
+      //                   district: districtName,
+      //                   state: stateName,
+      //                 });
+      //               });
+      //             return null;
+      //           });
+      //         return districts;
+      //       },
+      //     },
+      //   })
+      // );
     });
   }, [expand]);
 

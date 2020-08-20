@@ -78,10 +78,10 @@ export const formatDate = (unformattedDate, formatString) => {
 
 export const abbreviateNumber = (number) => {
   if (Math.abs(number) < 1e3) return numberFormatter.format(number);
-  else if (Math.abs(number) >= 1e3 && Math.abs(number) < 1e5)
+  else if (Math.abs(number) >= 1e3 && Math.abs(number) < 1e6)
     return numberFormatter.format(number / 1e3) + 'K';
-  // else if (Math.abs(number) >= 1e5 && Math.abs(number) < 1e7)
-  //   return numberFormatter.format(number / 1e5) + 'L';
+  else if (Math.abs(number) >= 1e6)
+    return numberFormatter.format(number / 1e6) + 'M';
   // else if (Math.abs(number) >= 1e7 && Math.abs(number) < 1e10)
   //   return numberFormatter.format(number / 1e7) + 'Cr';
   // else if (Math.abs(number) >= 1e10 && Math.abs(number) < 1e14)
@@ -121,19 +121,22 @@ export const getStatistic = (data, type, statistic, perMillion = false) => {
       !STATISTIC_OPTIONS[statistic]?.normalizeByKey &&
       PER_MILLION_OPTIONS),
   };
-  // console.log("data: ", data)
+  // console.log(key)
 
   let count;
   if (key === 'population') {
     count = type === 'total' ? data?.meta?.population : 0;
   } else if (key === 'tested') {
+    // console.log(data)
     count = data?.[type]?.tested;
   } else if (key === 'active') {
-    const confirmed = data?.[type]?.confirmed || 0;
-    const deceased = data?.[type]?.deceased || 0;
-    const recovered = data?.[type]?.recovered || 0;
-    const other = data?.[type]?.other || 0;
-    count = confirmed - deceased - recovered - other;
+    // const confirmed = data?.[type]?.confirmed || 0;
+    // const deceased = data?.[type]?.deceased || 0;
+    // const recovered = data?.[type]?.recovered || 0;
+    // const other = data?.[type]?.other || 0;
+    // count = confirmed - deceased - recovered - other;
+    // New dataset has active values directly
+    count = data?.[type]?.active || 0;
   } else {
     count = data?.[type]?.[key];
   }
@@ -166,14 +169,15 @@ export const getTableStatistic = (
   isPerMillion,
   lastUpdatedTT
 ) => {
-  const expired =
-    (STATISTIC_OPTIONS[statistic].key === 'tested' ||
-      STATISTIC_OPTIONS[statistic].normalizeByKey === 'tested') &&
-    differenceInDays(
-      lastUpdatedTT,
-      parseNZDate(data.meta?.tested?.['last_updated'])
-    ) > TESTED_LOOKBACK_DAYS;
-
+  const expired = false;
+    // (STATISTIC_OPTIONS[statistic].key === 'tested' ||
+    //   STATISTIC_OPTIONS[statistic].normalizeByKey === 'tested') &&
+    // differenceInDays(
+    //   lastUpdatedTT,
+    //   parseNZDate(data.meta?.tested?.['last_updated'])
+    // ) > TESTED_LOOKBACK_DAYS;
+    // if(STATISTIC_OPTIONS[statistic].key === 'tested')
+      // console.log(STATISTIC_OPTIONS[statistic].key, expired)
   const total = !expired
     ? getStatistic(data, 'total', statistic, isPerMillion)
     : 0;

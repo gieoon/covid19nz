@@ -1,5 +1,4 @@
 import './App.scss';
-import Blog from './components/Blog';
 // import Navbar from './components/Navbar';
 import MiniNavbar from './components/MiniNavbar';
 
@@ -24,24 +23,18 @@ const App = () => {
       displayName: 'Home',
       showInNavbar: true,
     },
-    {
-      pageLink: '/blog',
-      view: Blog,
-      displayName: 'Blog',
-      showInNavbar: true,
-    },
-    {
-      pageLink: '/about',
-      view: About,
-      displayName: 'About',
-      showInNavbar: true,
-    },
-    {
-      pageLink: '/state/:stateCode',
-      view: State,
-      displayName: 'State',
-      showInNavbar: false,
-    },
+    // {
+    //   pageLink: '/about',
+    //   view: About,
+    //   displayName: 'About',
+    //   showInNavbar: true,
+    // },
+    // {
+    //   pageLink: '/state/:stateCode',
+    //   view: State,
+    //   displayName: 'State',
+    //   showInNavbar: false,
+    // },
   ];
 
   useEffect(() => {

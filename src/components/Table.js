@@ -248,7 +248,7 @@ function Table({
               </div>
               <div className="helper-right">
                 <div className="info-item">
-                  <p>{t('Units')}</p>
+                  <p style={{whiteSpace: "nowrap"}}>{t('Units')}</p>
                 </div>
                 {Object.entries({'1K': 3}).map(
                   ([abbr, exp]) => (

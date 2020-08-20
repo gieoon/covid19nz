@@ -35,7 +35,7 @@ function StateHeader({data, stateCode}) {
         {data?.meta?.['last_updated'] && (
           <h5 className="fadeInUp" style={trail[1]}>
             {`${t('Last Updated on')} ${formatDate(
-              data.meta.last_updated,
+              data.meta.last_updated, 
               'dd MMM, p'
             )} NZST`}
           </h5>

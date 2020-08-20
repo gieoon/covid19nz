@@ -111,15 +111,15 @@ const Timeline = ({setIsTimelineMode, setDate, dates}) => {
   };
 
   const timeline = {
-    '2020-03-25': 'Beginning of Lockdown Phase 1',
-    '2020-04-14': 'End of Lockdown Phase 1',
-    '2020-04-15': 'Beginning of Lockdown Phase 2',
-    '2020-05-03': 'End of Lockdown Phase 2',
-    '2020-05-04': 'Beginning of Lockdown Phase 3',
-    '2020-05-17': 'End of Lockdown Phase 3',
-    '2020-05-18': 'Beginning of Lockdown Phase 4',
-    '2020-05-31': 'End of Lockdown Phase 4',
-    '2020-06-01': 'Beginning of Lockdown Phase 5',
+    '2020-03-16': 'Border restrictions, compulsory self-isolation, cruise ships prohibited',
+    '2020-03-19': 'Border closed to all but New Zealand citizens and residents',
+    '2020-03-21': 'Alert Level 2 - Reduce',
+    '2020-03-23': 'Alert Level 3 - Restrict',
+    '2020-03-25': 'Alert Level 4 - Lockdown',
+    '2020-04-28': 'Alert Level 3 - Restrict',
+    '2020-05-14': 'Alert Level 2 - Reduce',
+    '2020-06-09': 'Alert Level 1 - Prepare',
+    '2020-08-12': 'Auckland at Alert Level 3 | Remainder of New Zealand at Alert Level 2',
   };
 
   const transition = useTransition(

@@ -291,12 +291,12 @@ function TimeseriesExplorer({
         ))}
       </div>
 
-      {/* <div className="alert">
+      <div className="alert">
         <IssueOpenedIcon size={24} />
         <div className="alert-right">
-          {t('Tested chart is independent of uniform scaling')}
+          {t("We're still reviewing historical testing data")}
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }

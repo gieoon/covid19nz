@@ -17,7 +17,7 @@ function Footer() {
         </a>
       </div>
 
-      <h5>{t("Keeping Kiwi's updated through these challenging times")} 
+      <h5>{t("Keeping Kiwi's updated in challenging times")} 
         <br/><br/>
         <span>{t('This website was built based on ')}</span>
         <a target='_blank' href='https://github.com/covid19india/covid19india-react' rel="noopener noreferrer">covid19india.org</a>
