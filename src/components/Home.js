@@ -52,7 +52,7 @@ function Home() {
   // console.log(date)
 
   const {data} = useStickySWR(
-    `${API_ROOT_URL}/data${date ? `-${date}` : ''}.min.json`,
+    `${API_ROOT_URL}/days/data${date ? `-${date}` : ''}.min.json`,
     // `${API_ROOT_URL}/timeseries.min.json`,
     // `https://api.covid19india.org/v4/min/data${date ? `-${date}` : ''}.min.json`,
     fetcher,
@@ -65,6 +65,8 @@ function Home() {
   const homeRightElement = useRef();
   const isVisible = useIsVisible(homeRightElement);
   const {width} = useWindowSize();
+
+  console.log(data && data['TT'])
 
   return (
     <React.Fragment>

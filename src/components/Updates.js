@@ -50,23 +50,23 @@ function Updates({updates}) {
               {activityDate.getDate() !== currentDate.getDate()
                 ? addHeader()
                 : ' '}
-              <div key={index} className="update">
-                <h5>
-                  {capitalize(
-                    formatDistance(
-                      // new Date(activity.timestamp * 1000),
-                      new Date(activity.date),
-                      new Date()
-                    )
-                  ) + ' ago'}
-                </h5>
-                <a href={activity.source} target="_blank" rel="noopener noreferrer">
-                  <h4
-                  dangerouslySetInnerHTML={{
-                    __html: activity.update,
-                  }}></h4>
-                </a>
-              </div>
+              <a href={activity.source} target="_blank" rel="noopener noreferrer">
+                <div key={index} className="update">
+                  <h5>
+                    {capitalize(
+                      formatDistance(
+                        // new Date(activity.timestamp * 1000),
+                        new Date(activity.date),
+                        new Date()
+                      )
+                    ) + ' ago'}
+                  </h5>
+                    <h4
+                    dangerouslySetInnerHTML={{
+                      __html: activity.update,
+                    }}></h4>
+                </div>
+              </a>
             </React.Fragment>
           );
         })}

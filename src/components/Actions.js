@@ -17,7 +17,6 @@ const Actions = ({setDate, dates}) => {
 
   const {data: updates} = useSWR(
     `${API_BARE_URL}data/updates.json`,
-    // 'https://api.covid19india.org/updatelog/log.json',
     fetcher,
     {
       revalidateOnFocus: true,
@@ -28,9 +27,12 @@ const Actions = ({setDate, dates}) => {
     // console.log(updates)
     if (updates !== undefined) {
       // const lastTimestamp = updates.slice().reverse()[0].timestamp * 1000;
-      const lastTimestamp = updates.slice().reverse()[0].date;
+      // const lastTimestamp = updates.slice().reverse()[0].date;
+      const lastTimestamp = updates[0].date;
+      // console.log(updates[0])
       // console.log(lastTimestamp)
-      if (lastTimestamp !== lastViewedLog) {
+      if (lastTimestamp !== lastViewedLog && lastTimestamp > lastViewedLog) {
+        // console.log('setting new update: ', lastTimestamp, lastViewedLog);
         setNewUpdate(true);
         setLastViewedLog(lastTimestamp);
       }
@@ -38,7 +40,7 @@ const Actions = ({setDate, dates}) => {
   }, [lastViewedLog, updates, setLastViewedLog, setNewUpdate]);
   
   // console.log(updates, lastViewedLog)
-  if(!lastViewedLog) return <></>
+  // if(!lastViewedLog) return <></>
   return (
     <React.Fragment>
       <ActionsPanel

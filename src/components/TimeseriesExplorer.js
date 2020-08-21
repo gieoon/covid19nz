@@ -294,7 +294,7 @@ function TimeseriesExplorer({
       <div className="alert">
         <IssueOpenedIcon size={24} />
         <div className="alert-right">
-          {t("We're still reviewing historical testing data")}
+          {t("Historical testing data is still under reconciliation")}
         </div>
       </div>
     </div>

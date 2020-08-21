@@ -51,7 +51,7 @@ function PureLevelItem({statistic, total, delta}) {
 const LevelItem = React.memo(PureLevelItem);
 
 function Level({data}) {
-  // console.log(data)
+  console.log(data)
   const trail = useMemo(() => {
     const styles = [];
 

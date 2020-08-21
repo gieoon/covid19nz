@@ -27,7 +27,7 @@ const margin = {top: 10, right: 10, bottom: 2, left: 5};
 
 function Minigraphs({timeseries, date: timelineDate}) {
   const refs = useRef([]);
-
+  console.log(timeseries)
   const dates = useMemo(() => {
     const cutOffDateUpper = timelineDate || getNZYesterdayISO();
     // console.log(cutOffDateUpper)
@@ -35,7 +35,7 @@ function Minigraphs({timeseries, date: timelineDate}) {
       (date) => date <= cutOffDateUpper
     );
     const lastDate = pastDates[pastDates.length - 1];
-    console.log(lastDate, pastDates)
+    console.log("lastDate: ", lastDate, "pastDates: ", pastDates)
 
     const cutOffDateLower = formatISO(
       subDays(parseNZDate(lastDate), MINIGRAPH_LOOKBACK_DAYS),
