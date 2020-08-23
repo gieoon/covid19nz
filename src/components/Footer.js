@@ -7,6 +7,9 @@ function Footer() {
 
   return (
     <footer>
+      <div>
+        <img src="./logo.jpg" alt="" style={{width: "5rem"}}/>
+      </div>
       <div className="link">
         <a
           href="https://nz.covid19live.com"
