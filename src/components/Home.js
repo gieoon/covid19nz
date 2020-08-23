@@ -20,6 +20,7 @@ const Search = lazy(() => import('./Search'));
 const Level = lazy(() => import('./Level'));
 const MapSwitcher = lazy(() => import('./MapSwitcher'));
 const StateHeader = lazy(() => import('./StateHeader'));
+const TopTitle = lazy(() => import('./TopTitle'));
 
 const GoogleAd = lazy(() => import ('./GoogleAd'));
 
@@ -66,7 +67,7 @@ function Home() {
   const isVisible = useIsVisible(homeRightElement);
   const {width} = useWindowSize();
 
-  console.log(data && data['TT'])
+  // console.log(data && data['TT'], date);
 
   return (
     <React.Fragment>
@@ -79,14 +80,16 @@ function Home() {
       </Helmet>
 
       <div className="Home">
+
+        <TopTitle />
         {/* nz.covid19live.com_ad1 */}
         <GoogleAd client="ca-pub-9859357986849249" slot="3842985080" />
-
+        
         <div className={classnames('home-left', {expanded: expandTable})}>
           <div className="header">
-            <Suspense fallback={<div />}>
+            {/* <Suspense fallback={<div />}>
               <Search />
-            </Suspense>
+            </Suspense> */}
 
             {timeseries && (
               <Suspense fallback={<div style={{minHeight: '56px'}} />}>

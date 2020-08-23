@@ -32,10 +32,17 @@ function PureLevelItem({statistic, total, delta}) {
               (delta) =>
                 `+${formatNumber(delta, statisticConfig.format, statistic)}`
             )
+          ) 
+          : delta <= 0 ? (
+            spring.delta.interpolate(
+              (delta) =>
+                `${formatNumber(delta, statisticConfig.format, statistic)}`
+            )
           ) : (
             <HeartFillIcon size={9} verticalAlign={2} />
           )
-        ) : (
+        ) 
+        : (
           '\u00A0'
         )}
       </animated.h4>
@@ -51,7 +58,7 @@ function PureLevelItem({statistic, total, delta}) {
 const LevelItem = React.memo(PureLevelItem);
 
 function Level({data}) {
-  console.log(data)
+  // console.log("level data: ", data);
   const trail = useMemo(() => {
     const styles = [];
 
@@ -64,6 +71,8 @@ function Level({data}) {
     return styles;
   }, []);
 
+  // console.log("getStatistic(data, 'total', statistic): ", getStatistic(data, 'total', 'recovered'));
+  // console.log("getStatistic(data, 'delta', statistic): ", getStatistic(data, 'delta', 'recovered'));
   return (
     <div className="Level">
       {PRIMARY_STATISTICS.map((statistic, index) => (

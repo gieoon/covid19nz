@@ -11,6 +11,8 @@ const About = lazy(() => import('./components/About'));
 const State = lazy(() => import('./components/State'));
 const LanguageSwitcher = lazy(() => import('./components/LanguageSwitcher'));
 
+// const GoogleAd = lazy(() => import ('./components/GoogleAd'));
+
 const App = () => {
   const darkMode = useDarkMode(true); // Default to true
   const [showLanguageSwitcher, setShowLanguageSwitcher] = useState(false);
@@ -48,6 +50,7 @@ const App = () => {
 
   return (
     <div className="App">
+
       <Suspense fallback={<div />}>
         <LanguageSwitcher
           {...{showLanguageSwitcher, setShowLanguageSwitcher}}

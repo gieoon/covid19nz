@@ -28,10 +28,10 @@ const Actions = ({setDate, dates}) => {
     if (updates !== undefined) {
       // const lastTimestamp = updates.slice().reverse()[0].timestamp * 1000;
       // const lastTimestamp = updates.slice().reverse()[0].date;
-      const lastTimestamp = updates[0].date;
+      const lastTimestamp = updates[updates.length-1].date;
       // console.log(updates[0])
       // console.log(lastTimestamp)
-      if (lastTimestamp !== lastViewedLog && lastTimestamp > lastViewedLog) {
+      if (lastTimestamp !== lastViewedLog){// && lastTimestamp > lastViewedLog) {
         // console.log('setting new update: ', lastTimestamp, lastViewedLog);
         setNewUpdate(true);
         setLastViewedLog(lastTimestamp);

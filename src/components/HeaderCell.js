@@ -42,11 +42,17 @@ function StateHeaderCell({handleSort, sortData, setSortData, statistic}) {
         </div>
       )}
       <div>{t(toTitleCase(STATISTIC_CONFIGS[statistic].displayName))}</div>
-      {statistic === 'other' && (
+      {/* {statistic === 'other' && (
         <Tooltip data={'Migrated cases or non-COVID deaths'}>
           <InfoIcon size={14} />
         </Tooltip>
-      )}
+      )} */}
+      {statistic === 'confirmed' && (
+        <Tooltip data={'Combines confirmed and probable cases, as per NZ Ministry of Health guidelines'}>
+          <InfoIcon size={14} />
+        </Tooltip>
+        )
+      }
     </div>
   );
 }

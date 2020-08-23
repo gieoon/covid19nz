@@ -82,7 +82,6 @@ const ActionsPanel = ({
   }, []);
 
   const getTimeFromMilliseconds = (lastViewedLog) => {
-    // console.log(lastViewedLog)
     return format(
       utcToZonedTime(new Date(lastViewedLog), "Pacific/Auckland"), 
     'dd MMM, p')
@@ -116,13 +115,14 @@ const ActionsPanel = ({
           {newUpdate && <div className="indicator"></div>}
         </div>
 
-        <div
+        {/* TODO need historic data for this to work */}
+        {/* <div
           className="timeline-icon fadeInUp"
           onClick={handleClick}
           style={trail[2]}
         >
           {TimelineIcon}
-        </div>
+        </div> */}
       </animated.div>
 
       <animated.div

@@ -27,25 +27,31 @@ const margin = {top: 10, right: 10, bottom: 2, left: 5};
 
 function Minigraphs({timeseries, date: timelineDate}) {
   const refs = useRef([]);
-  console.log(timeseries)
+  // console.log(timeseries)
+  // console.log("timelineDate: ", timelineDate)
   const dates = useMemo(() => {
-    const cutOffDateUpper = timelineDate || getNZYesterdayISO();
+    const cutOffDateUpper = "2020-08-17" //timelineDate || getNZYesterdayISO();
     // console.log(cutOffDateUpper)
     const pastDates = Object.keys(timeseries || {}).filter(
       (date) => date <= cutOffDateUpper
     );
     const lastDate = pastDates[pastDates.length - 1];
-    console.log("lastDate: ", lastDate, "pastDates: ", pastDates)
 
     const cutOffDateLower = formatISO(
       subDays(parseNZDate(lastDate), MINIGRAPH_LOOKBACK_DAYS),
       {representation: 'date'}
     );
+    // Object.keys(timeseries || {}).forEach((date)=>{
+    //   console.log(date, date <= cutOffDateUpper)
+    // });
+    // console.log(pastDates)
+    // console.log(cutOffDateLower)
 
     return pastDates.filter((date) => date >= cutOffDateLower);
   }, [timeseries, timelineDate]);
 
   useEffect(() => {
+    // console.log(dates)
     const T = dates.length;
 
     const chartRight = width - margin.right;

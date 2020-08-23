@@ -4452,3 +4452,25 @@ footer {
 .region {
   transition: opacity 300ms linear!important;
 }
+
+.TopTitle {
+  // text-align: center;
+}
+
+@media (min-width: 769px) {
+  .TopTitle {
+    width: 34rem;
+    margin-right: 2.5rem;
+
+    .alert-right {
+      width: 100%!important;
+    }
+  }
+}
+
+@media (max-width: 769px) {
+  .TopTitle {
+    width: calc(100% - 3rem)!important;
+    margin: 0 1rem;
+  }
+}
