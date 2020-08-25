@@ -83,7 +83,7 @@ const ActionsPanel = ({
 
   const getTimeFromMilliseconds = (lastViewedLog) => {
     return format(
-      utcToZonedTime(new Date(lastViewedLog), "Pacific/Auckland"), 
+      utcToZonedTime(Date.parse(lastViewedLog), "Pacific/Auckland"), 
     'dd MMM, p')
     // return format(
     //   utcToZonedTime(parse(lastViewedLog, 'T', new Date()), "Pacific/Auckland"),

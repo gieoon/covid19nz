@@ -23,9 +23,9 @@ export default function GoogleAd({
             textAlign: "center",
             marginTop: "64px",
             marginBottom: "64px",
-        }}>
-            <ins className="adsbygoogle"
-                style={{display:"inline-block",width:"728px",height:"90px"}}
+        }} className="google_adsense">
+            <ins className="adsbygoogle google_adsense"
+                style={{display:"inline-block"}}
                 data-ad-client={client}
                 data-ad-slot={slot}
                 data-ad-format="auto">

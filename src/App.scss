@@ -4470,7 +4470,25 @@ footer {
 
 @media (max-width: 769px) {
   .TopTitle {
-    width: calc(100% - 3rem)!important;
-    margin: 0 1rem;
+    // width: calc(100% - 3rem)!important;
+    // margin: 0 1rem;
+    width: calc(50% - 3rem)!important;
+    margin: auto;
+  }
+
+}
+
+// AdSense sizings
+@media (min-width: 769px) {
+  .google_adsense {
+    width: 728px;
+    height: 90px;
+  }
+}
+
+@media (max-width: 769px) {
+  .google_adsense {
+    width: 320px;
+    height: 100px;
   }
 }
