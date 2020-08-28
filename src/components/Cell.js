@@ -24,7 +24,8 @@ const Cell = ({statistic, data, isPerMillion, lastUpdatedTT}) => {
 
   return (
     <div className="cell statistic">
-      {!statisticConfig.hideDelta && (
+      {/* TODO temporarily removed this */}
+      {/* {!statisticConfig.hideDelta && (
         <animated.div
           className={classnames('delta', `is-${statistic}`)}
           title={delta}
@@ -37,7 +38,7 @@ const Cell = ({statistic, data, isPerMillion, lastUpdatedTT}) => {
               : ''
           )}
         </animated.div>
-      )}
+      )} */}
 
       <animated.div className="total" title={total}>
         {spring.total.interpolate((total) =>

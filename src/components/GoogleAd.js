@@ -28,7 +28,8 @@ export default function GoogleAd({
                 style={{display:"inline-block"}}
                 data-ad-client={client}
                 data-ad-slot={slot}
-                data-ad-format="auto">
+                // data-ad-format="auto"
+            >
             </ins>
         </div>
     );

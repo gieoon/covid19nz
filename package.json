@@ -1,8 +1,8 @@
 {
-  "name": "covid19india",
+  "name": "nz.covid19live",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://www.covid19india.org/",
+  "homepage": "https://nz.covid19live.com/",
   "dependencies": {
     "@juggle/resize-observer": "^3.2.0",
     "@primer/octicons-v2-react": "0.0.0-53e900d",

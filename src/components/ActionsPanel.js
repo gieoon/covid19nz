@@ -82,9 +82,23 @@ const ActionsPanel = ({
   }, []);
 
   const getTimeFromMilliseconds = (lastViewedLog) => {
-    return format(
-      utcToZonedTime(Date.parse(lastViewedLog), "Pacific/Auckland"), 
-    'dd MMM, p')
+    try{
+      return format(
+        utcToZonedTime(Date.parse(lastViewedLog), "Pacific/Auckland"), 
+      'dd MMM, p')
+      } catch(ex){
+        // .parse is not flexible in Safari, so catch and use a more lenient system
+        var values = lastViewedLog.toString().split(/[^0-9]/),
+            year = parseInt(values[0], 10),
+            month = parseInt(values[1], 10) - 1, // Month is zero based, so subtract 1
+            day = parseInt(values[2], 10),
+            hours = parseInt(values[3], 10),
+            minutes = parseInt(values[4], 10),
+            formattedDate;
+
+        formattedDate = new Date(year, month, day, hours, minutes);
+        return format(utcToZonedTime(formattedDate, "Pacific/Auckland"), 'dd MMM, p');
+      }
     // return format(
     //   utcToZonedTime(parse(lastViewedLog, 'T', new Date()), "Pacific/Auckland"),
     //   'dd MMM, p'

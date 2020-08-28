@@ -4472,8 +4472,9 @@ footer {
   .TopTitle {
     // width: calc(100% - 3rem)!important;
     // margin: 0 1rem;
-    width: calc(50% - 3rem)!important;
+    width: calc(90% - 3rem)!important;
     margin: auto;
+    max-width: 320px;
   }
 
 }
@@ -4482,13 +4483,20 @@ footer {
 @media (min-width: 769px) {
   .google_adsense {
     width: 728px;
-    height: 90px;
+    min-width: 728px;
+    // height: 90px;
+    min-height: 90px;
+    margin: auto;
   }
 }
 
 @media (max-width: 769px) {
   .google_adsense {
-    width: 320px;
-    height: 100px;
+    // width: 320px;
+    width: 100vw;
+    // min-width: 120px;
+    // height: 50px; //100px
+    min-height: 90px;
+    margin: auto;
   }
 }
