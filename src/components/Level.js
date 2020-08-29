@@ -46,6 +46,7 @@ function PureLevelItem({statistic, total, delta}) {
           '\u00A0'
         )}
       </animated.h4> */}
+      <animated.h4></animated.h4>
       <animated.h1>
         {spring.total.interpolate((total) =>
           formatNumber(total, statisticConfig.format, statistic)
